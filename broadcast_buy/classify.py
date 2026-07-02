@@ -15,7 +15,6 @@ NEWS_DAYPARTS = {"EARLY MORNING", "EARLY NEWS", "LATE NEWS"}
 DAYTIME_DAYPARTS = {"DAYTIME", "DAY"}
 ACCESS_DAYPARTS = {"ACCESS", "PRIME ACCESS"}
 EXCLUDED_DAYPARTS = {
-    "PRIME",
     "SPORTS",
     "EARLY FRINGE",
     "LATE FRINGE",
@@ -25,15 +24,26 @@ EXCLUDED_DAYPARTS = {
 }
 
 LIKED_KEYWORDS = ("JEOPARDY", "WHEEL OF FORTUNE")
+PRIME_NEWS_KEYWORDS = ("60 MINUTES",)
 NOON_NEWS_START = 10 * 60  # 10:00 AM
 NOON_NEWS_END = 14 * 60  # 2:00 PM
 
 
 def classify(avail):
     """Returns one of: 'Early News', 'Noon News', 'Evening News', 'Late News',
-    'Liked Access', 'Daytime', or None (excluded from the buy)."""
+    'Prime News', 'Liked Access', 'Daytime', or None (excluded from the buy)."""
     dp = avail.daypart_name.strip().upper()
     name = avail.program_name.strip().upper()
+
+    if dp == "PRIME":
+        # Primetime is excluded by default, except the specific programs
+        # called out as exceptions: Wheel/Jeopardy, and prime news
+        # programming like 60 Minutes.
+        if any(kw in name for kw in LIKED_KEYWORDS):
+            return "Liked Access"
+        if any(kw in name for kw in PRIME_NEWS_KEYWORDS):
+            return "Prime News"
+        return None
 
     if dp in EXCLUDED_DAYPARTS:
         return None
@@ -60,14 +70,3 @@ def classify(avail):
         return "Daytime"
 
     return None
-
-
-NEWS_CATEGORIES = {"Early News", "Noon News", "Evening News", "Late News"}
-TIER_ORDER = {
-    "Early News": 1,
-    "Noon News": 1,
-    "Evening News": 1,
-    "Late News": 1,
-    "Liked Access": 2,
-    "Daytime": 3,
-}

@@ -7,7 +7,15 @@ from openpyxl.utils import get_column_letter
 HEADER_FILL = PatternFill(start_color="1F4E78", end_color="1F4E78", fill_type="solid")
 HEADER_FONT = Font(color="FFFFFF", bold=True)
 SECTION_FONT = Font(bold=True, size=12)
-CATEGORY_ORDER = ["Early News", "Noon News", "Evening News", "Late News", "Liked Access", "Daytime"]
+CATEGORY_ORDER = [
+    "Early News",
+    "Noon News",
+    "Evening News",
+    "Late News",
+    "Prime News",
+    "Liked Access",
+    "Daytime",
+]
 
 
 def _min_to_clock(m):

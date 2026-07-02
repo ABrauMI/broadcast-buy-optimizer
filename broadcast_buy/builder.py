@@ -9,7 +9,7 @@ import statistics
 from collections import defaultdict
 from dataclasses import dataclass, field
 
-from .classify import NEWS_CATEGORIES, TIER_ORDER, classify
+from .classify import classify
 
 MIN_SPOT_GAP_MIN = 30
 OUTLIER_CPP_MULTIPLIER = 3.0
@@ -56,17 +56,26 @@ def build_sample_buy(all_avails, target_grps=750.0):
         a._category = classify(a)
     eligible = [a for a in eligible if a._category]
 
-    news = [a for a in eligible if a._category in NEWS_CATEGORIES]
+    # "Core" news (Early/Noon/Evening/Late) is where the CPP-outlier check
+    # applies. "Prime News" (e.g. 60 Minutes) is an explicitly-requested
+    # exception to the no-primetime rule, so it's bought at full priority
+    # like the rest of news, without being deprioritized for cost.
+    news_core = [
+        a
+        for a in eligible
+        if a._category in {"Early News", "Noon News", "Evening News", "Late News"}
+    ]
+    prime_news = [a for a in eligible if a._category == "Prime News"]
     liked = [a for a in eligible if a._category == "Liked Access"]
     daytime = [a for a in eligible if a._category == "Daytime"]
 
     # -- Tier 1: news, non-outliers first, outliers (crazy-high CPP) last --
-    news_cpps = [_cpp(a) for a in news if _cpp(a) is not None]
+    news_cpps = [_cpp(a) for a in news_core if _cpp(a) is not None]
     median_news_cpp = statistics.median(news_cpps) if news_cpps else 0
     outlier_threshold = median_news_cpp * OUTLIER_CPP_MULTIPLIER
 
-    news_normal = [a for a in news if (_cpp(a) or 0) <= outlier_threshold]
-    news_outlier = [a for a in news if (_cpp(a) or 0) > outlier_threshold]
+    news_normal = [a for a in news_core if (_cpp(a) or 0) <= outlier_threshold]
+    news_outlier = [a for a in news_core if (_cpp(a) or 0) > outlier_threshold]
     result.outlier_avails = [
         (a.station, a.program_name, round(_cpp(a), 2)) for a in news_outlier
     ]
@@ -80,7 +89,9 @@ def build_sample_buy(all_avails, target_grps=750.0):
         return groups
 
     news_normal_order = list(
-        _round_robin(group_by(news_normal, lambda a: (a.station, a._category)))
+        _round_robin(
+            group_by(news_normal + prime_news, lambda a: (a.station, a._category))
+        )
     )
     news_outlier_order = list(
         _round_robin(group_by(news_outlier, lambda a: (a.station, a._category)))
