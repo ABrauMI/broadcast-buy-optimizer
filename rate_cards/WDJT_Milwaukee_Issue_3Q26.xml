@@ -1,0 +1,3477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AAAA-Message xmlns="http://www.AAAA.org/schemas/spotTVCableProposal"
+	xmlns:tvb="http://www.AAAA.org/schemas/spotTV"
+	xmlns:tvb-tp="http://www.AAAA.org/schemas/TVBGeneralTypes"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.AAAA.org/schemas/spotTVCableProposal spotTVCableProposal-0.3.0.5A.xsd">
+	<AAAA-Values>
+		<SchemaName>SpotTVCableProposal</SchemaName>
+		<SchemaVersion>0.3.0.5</SchemaVersion>
+		<Media>SpotTV</Media>
+		<BusinessObject>Proposal</BusinessObject>
+		<Action>New</Action>
+		<UniqueMessageID>LOCALITY1782763371</UniqueMessageID>
+	</AAAA-Values>
+	<Proposal uniqueIdentifier="Test Advertiser Jun29 2026 - Sep13 2026" version="1" sendDateTime="2026-06-29T16:02:51" weekStartDay="Mo" startDate="2026-06-29" endDate="2026-09-13">
+		<Seller companyName="LOCALITY">
+			<Salesperson name="Nick Welte AE">
+				<Phone type="voice">(610) 293-4100</Phone>
+				<Email type="primary">nick.welte@locality.com</Email>
+			</Salesperson>
+		</Seller>
+		<Buyer buyingCompanyName="Test Agency (ZZ)">
+		<BuyerName>Various</BuyerName>
+		</Buyer>
+		<Advertiser name="Test Advertiser (ZZ)">
+		</Advertiser>
+		<Name>Test Advertiser Jun29 2026 - Sep13 2026</Name>
+		<Outlets>
+			<TelevisionStation callLetters="WDJT" parentPlus="N" outletId="OUT0"/>
+		</Outlets>
+		<AvailList startDate="2026-06-29" endDate="2026-09-13" identifier="AL001" isPackage="N">
+			<Name>Television Schedule - Milwaukee Q3/EST DMA Nielsen LS</Name>
+			<OutletReferences>
+				<OutletReference outletFromProposalRef="OUT0" outletForListId="OUL0"/>
+			</OutletReferences>
+			<DemoCategories>
+				<DemoCategory DemoId="DM0">
+					<tvb:DemoType>Rating</tvb:DemoType>
+					<tvb:Group>Adults</tvb:Group>
+					<tvb:AgeFrom>35</tvb:AgeFrom>
+					<tvb:AgeTo>99</tvb:AgeTo>
+				</DemoCategory>
+				<DemoCategory DemoId="DM1">
+					<tvb:DemoType>Rating</tvb:DemoType>
+					<tvb:Group>Adults</tvb:Group>
+					<tvb:AgeFrom>50</tvb:AgeFrom>
+					<tvb:AgeTo>99</tvb:AgeTo>
+				</DemoCategory>
+				<DemoCategory DemoId="DM2">
+					<tvb:DemoType>Rating</tvb:DemoType>
+					<tvb:Group>Adults</tvb:Group>
+					<tvb:AgeFrom>55</tvb:AgeFrom>
+					<tvb:AgeTo>99</tvb:AgeTo>
+				</DemoCategory>
+				<DemoCategory DemoId="DM3">
+					<tvb:DemoType>Rating</tvb:DemoType>
+					<tvb:Group>Adults</tvb:Group>
+					<tvb:AgeFrom>65</tvb:AgeFrom>
+					<tvb:AgeTo>99</tvb:AgeTo>
+				</DemoCategory>
+				<DemoCategory DemoId="DM4">
+					<tvb:DemoType>Rating</tvb:DemoType>
+					<tvb:Group>Adults</tvb:Group>
+					<tvb:AgeFrom>18</tvb:AgeFrom>
+					<tvb:AgeTo>99</tvb:AgeTo>
+				</DemoCategory>
+				<DemoCategory DemoId="DM5">
+					<tvb:DemoType>Impression</tvb:DemoType>
+					<tvb:Group>Adults</tvb:Group>
+					<tvb:AgeFrom>35</tvb:AgeFrom>
+					<tvb:AgeTo>99</tvb:AgeTo>
+				</DemoCategory>
+			</DemoCategories>
+			<TargetDemo demoRef="DM0"/>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>05:00</StartTime>
+						<EndTime>06:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EARLY MORNING</DaypartName>
+				<AvailName>CBS 58 MORN NEWS-5A</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>200.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.33</DemoValue>
+							<DemoValue demoRef="DM1">0.39</DemoValue>
+							<DemoValue demoRef="DM2">0.41</DemoValue>
+							<DemoValue demoRef="DM3">0.44</DemoValue>
+							<DemoValue demoRef="DM4">0.26</DemoValue>
+							<DemoValue demoRef="DM5">4.30</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>06:00</StartTime>
+						<EndTime>07:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EARLY MORNING</DaypartName>
+				<AvailName>CBS 58 MORN NEWS-6A</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>250.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.49</DemoValue>
+							<DemoValue demoRef="DM1">0.58</DemoValue>
+							<DemoValue demoRef="DM2">0.60</DemoValue>
+							<DemoValue demoRef="DM3">0.69</DemoValue>
+							<DemoValue demoRef="DM4">0.38</DemoValue>
+							<DemoValue demoRef="DM5">6.28</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>07:00</StartTime>
+						<EndTime>09:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EARLY MORNING</DaypartName>
+				<AvailName>CBS THIS MORNING</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>650.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.70</DemoValue>
+							<DemoValue demoRef="DM1">0.92</DemoValue>
+							<DemoValue demoRef="DM2">1.00</DemoValue>
+							<DemoValue demoRef="DM3">1.20</DemoValue>
+							<DemoValue demoRef="DM4">0.53</DemoValue>
+							<DemoValue demoRef="DM5">9.07</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>05:30</StartTime>
+						<EndTime>06:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EARLY MORNING</DaypartName>
+				<AvailName>THE ADVOCATES</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>50.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.07</DemoValue>
+							<DemoValue demoRef="DM1">0.09</DemoValue>
+							<DemoValue demoRef="DM2">0.09</DemoValue>
+							<DemoValue demoRef="DM3">0.11</DemoValue>
+							<DemoValue demoRef="DM4">0.06</DemoValue>
+							<DemoValue demoRef="DM5">0.87</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>06:00</StartTime>
+						<EndTime>07:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EARLY MORNING</DaypartName>
+				<AvailName>CBS 58 MORNING NEWS AT 6AM</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>300.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.36</DemoValue>
+							<DemoValue demoRef="DM1">0.43</DemoValue>
+							<DemoValue demoRef="DM2">0.47</DemoValue>
+							<DemoValue demoRef="DM3">0.54</DemoValue>
+							<DemoValue demoRef="DM4">0.28</DemoValue>
+							<DemoValue demoRef="DM5">4.58</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>07:00</StartTime>
+						<EndTime>09:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EARLY MORNING</DaypartName>
+				<AvailName>CBS THIS MORNING (SAT)</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>400.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.52</DemoValue>
+							<DemoValue demoRef="DM1">0.68</DemoValue>
+							<DemoValue demoRef="DM2">0.76</DemoValue>
+							<DemoValue demoRef="DM3">0.93</DemoValue>
+							<DemoValue demoRef="DM4">0.41</DemoValue>
+							<DemoValue demoRef="DM5">6.75</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>06:00</StartTime>
+						<EndTime>07:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EARLY MORNING</DaypartName>
+				<AvailName>CBS 58 MORNING NEWS AT 6AM</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>300.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.40</DemoValue>
+							<DemoValue demoRef="DM1">0.47</DemoValue>
+							<DemoValue demoRef="DM2">0.50</DemoValue>
+							<DemoValue demoRef="DM3">0.58</DemoValue>
+							<DemoValue demoRef="DM4">0.31</DemoValue>
+							<DemoValue demoRef="DM5">5.10</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>07:00</StartTime>
+						<EndTime>08:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EARLY MORNING</DaypartName>
+				<AvailName>CBS 58 SUNDAY MORNING</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>600.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.80</DemoValue>
+							<DemoValue demoRef="DM1">1.02</DemoValue>
+							<DemoValue demoRef="DM2">1.14</DemoValue>
+							<DemoValue demoRef="DM3">1.47</DemoValue>
+							<DemoValue demoRef="DM4">0.61</DemoValue>
+							<DemoValue demoRef="DM5">10.28</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>08:00</StartTime>
+						<EndTime>09:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EARLY MORNING</DaypartName>
+				<AvailName>CBS SUNDAY MORNING</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>1800.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">2.13</DemoValue>
+							<DemoValue demoRef="DM1">2.79</DemoValue>
+							<DemoValue demoRef="DM2">3.08</DemoValue>
+							<DemoValue demoRef="DM3">3.95</DemoValue>
+							<DemoValue demoRef="DM4">1.60</DemoValue>
+							<DemoValue demoRef="DM5">27.44</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>09:30</StartTime>
+						<EndTime>10:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EARLY MORNING</DaypartName>
+				<AvailName>FACE THE NATION</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>600.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.25</DemoValue>
+							<DemoValue demoRef="DM1">1.69</DemoValue>
+							<DemoValue demoRef="DM2">1.91</DemoValue>
+							<DemoValue demoRef="DM3">2.40</DemoValue>
+							<DemoValue demoRef="DM4">0.93</DemoValue>
+							<DemoValue demoRef="DM5">16.01</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>09:00</StartTime>
+						<EndTime>10:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>DAY</DaypartName>
+				<AvailName>LET'S MAKE A DEAL</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>2000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.38</DemoValue>
+							<DemoValue demoRef="DM1">1.85</DemoValue>
+							<DemoValue demoRef="DM2">2.04</DemoValue>
+							<DemoValue demoRef="DM3">2.68</DemoValue>
+							<DemoValue demoRef="DM4">1.08</DemoValue>
+							<DemoValue demoRef="DM5">17.68</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>10:00</StartTime>
+						<EndTime>11:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>DAY</DaypartName>
+				<AvailName>THE PRICE IS RIGHT</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>2000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">2.11</DemoValue>
+							<DemoValue demoRef="DM1">2.81</DemoValue>
+							<DemoValue demoRef="DM2">3.13</DemoValue>
+							<DemoValue demoRef="DM3">3.97</DemoValue>
+							<DemoValue demoRef="DM4">1.64</DemoValue>
+							<DemoValue demoRef="DM5">27.11</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>11:00</StartTime>
+						<EndTime>12:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>DAY</DaypartName>
+				<AvailName><![CDATA[YOUNG & THE RESTLESS]]></AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>2000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.11</DemoValue>
+							<DemoValue demoRef="DM1">1.51</DemoValue>
+							<DemoValue demoRef="DM2">1.71</DemoValue>
+							<DemoValue demoRef="DM3">2.14</DemoValue>
+							<DemoValue demoRef="DM4">0.83</DemoValue>
+							<DemoValue demoRef="DM5">14.24</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>12:00</StartTime>
+						<EndTime>13:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>DAY</DaypartName>
+				<AvailName>CBS 58 NEWS AT NOON</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>600.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.89</DemoValue>
+							<DemoValue demoRef="DM1">1.17</DemoValue>
+							<DemoValue demoRef="DM2">1.29</DemoValue>
+							<DemoValue demoRef="DM3">1.64</DemoValue>
+							<DemoValue demoRef="DM4">0.68</DemoValue>
+							<DemoValue demoRef="DM5">11.48</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>13:00</StartTime>
+						<EndTime>14:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>DAY</DaypartName>
+				<AvailName>BEYOND THE GATES / BOLD BEAUTIFUL ENC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>600.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.56</DemoValue>
+							<DemoValue demoRef="DM1">0.76</DemoValue>
+							<DemoValue demoRef="DM2">0.86</DemoValue>
+							<DemoValue demoRef="DM3">1.00</DemoValue>
+							<DemoValue demoRef="DM4">0.43</DemoValue>
+							<DemoValue demoRef="DM5">7.25</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>14:00</StartTime>
+						<EndTime>14:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>DAY</DaypartName>
+				<AvailName><![CDATA[BOLD & THE BEAUTIFUL]]></AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>450.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.69</DemoValue>
+							<DemoValue demoRef="DM1">0.94</DemoValue>
+							<DemoValue demoRef="DM2">1.07</DemoValue>
+							<DemoValue demoRef="DM3">1.36</DemoValue>
+							<DemoValue demoRef="DM4">0.51</DemoValue>
+							<DemoValue demoRef="DM5">8.84</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>14:30</StartTime>
+						<EndTime>15:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>DAY</DaypartName>
+				<AvailName>TRIBUNAL JUSTICE</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>200.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.25</DemoValue>
+							<DemoValue demoRef="DM1">0.32</DemoValue>
+							<DemoValue demoRef="DM2">0.36</DemoValue>
+							<DemoValue demoRef="DM3">0.45</DemoValue>
+							<DemoValue demoRef="DM4">0.19</DemoValue>
+							<DemoValue demoRef="DM5">3.15</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>15:00</StartTime>
+						<EndTime>15:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EARLY FRINGE</DaypartName>
+				<AvailName>JUDY JUSTICE</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>350.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.83</DemoValue>
+							<DemoValue demoRef="DM1">1.16</DemoValue>
+							<DemoValue demoRef="DM2">1.34</DemoValue>
+							<DemoValue demoRef="DM3">1.69</DemoValue>
+							<DemoValue demoRef="DM4">0.62</DemoValue>
+							<DemoValue demoRef="DM5">10.68</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>15:30</StartTime>
+						<EndTime>16:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EARLY FRINGE</DaypartName>
+				<AvailName>JUDY JUSTICE</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>400.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.95</DemoValue>
+							<DemoValue demoRef="DM1">1.33</DemoValue>
+							<DemoValue demoRef="DM2">1.53</DemoValue>
+							<DemoValue demoRef="DM3">1.91</DemoValue>
+							<DemoValue demoRef="DM4">0.71</DemoValue>
+							<DemoValue demoRef="DM5">12.19</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>16:00</StartTime>
+						<EndTime>17:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EARLY NEWS</DaypartName>
+				<AvailName>CBS 58 NEWS-4P/430P</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>350.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.69</DemoValue>
+							<DemoValue demoRef="DM1">0.91</DemoValue>
+							<DemoValue demoRef="DM2">1.00</DemoValue>
+							<DemoValue demoRef="DM3">1.26</DemoValue>
+							<DemoValue demoRef="DM4">0.52</DemoValue>
+							<DemoValue demoRef="DM5">8.91</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>17:00</StartTime>
+						<EndTime>17:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EARLY NEWS</DaypartName>
+				<AvailName>CBS 58 NEWS-5P</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>600.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.20</DemoValue>
+							<DemoValue demoRef="DM1">1.60</DemoValue>
+							<DemoValue demoRef="DM2">1.78</DemoValue>
+							<DemoValue demoRef="DM3">2.32</DemoValue>
+							<DemoValue demoRef="DM4">0.91</DemoValue>
+							<DemoValue demoRef="DM5">15.50</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>17:00</StartTime>
+						<EndTime>17:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EARLY NEWS</DaypartName>
+				<AvailName>CBS 58 NEWS-5P (SAT)</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.33</DemoValue>
+							<DemoValue demoRef="DM1">1.77</DemoValue>
+							<DemoValue demoRef="DM2">2.01</DemoValue>
+							<DemoValue demoRef="DM3">2.48</DemoValue>
+							<DemoValue demoRef="DM4">1.00</DemoValue>
+							<DemoValue demoRef="DM5">17.01</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>17:30</StartTime>
+						<EndTime>18:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EARLY NEWS</DaypartName>
+				<AvailName>CBS 58 NEWS-530P (SUN)</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.69</DemoValue>
+							<DemoValue demoRef="DM1">2.19</DemoValue>
+							<DemoValue demoRef="DM2">2.37</DemoValue>
+							<DemoValue demoRef="DM3">2.65</DemoValue>
+							<DemoValue demoRef="DM4">1.26</DemoValue>
+							<DemoValue demoRef="DM5">21.64</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>18:00</StartTime>
+						<EndTime>18:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME ACCESS</DaypartName>
+				<AvailName>JEOPARDY</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>3500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">3.58</DemoValue>
+							<DemoValue demoRef="DM1">5.06</DemoValue>
+							<DemoValue demoRef="DM2">5.85</DemoValue>
+							<DemoValue demoRef="DM3">7.92</DemoValue>
+							<DemoValue demoRef="DM4">2.71</DemoValue>
+							<DemoValue demoRef="DM5">46.13</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>18:30</StartTime>
+						<EndTime>19:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME ACCESS</DaypartName>
+				<AvailName>WHEEL OF FORTUNE</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>4000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">3.84</DemoValue>
+							<DemoValue demoRef="DM1">5.37</DemoValue>
+							<DemoValue demoRef="DM2">6.16</DemoValue>
+							<DemoValue demoRef="DM3">8.20</DemoValue>
+							<DemoValue demoRef="DM4">2.93</DemoValue>
+							<DemoValue demoRef="DM5">49.46</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>18:00</StartTime>
+						<EndTime>19:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME ACCESS</DaypartName>
+				<AvailName>JEOPARDY WKND/ WHEEL OF FORTUNE WKND</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>1000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.59</DemoValue>
+							<DemoValue demoRef="DM1">2.22</DemoValue>
+							<DemoValue demoRef="DM2">2.56</DemoValue>
+							<DemoValue demoRef="DM3">3.43</DemoValue>
+							<DemoValue demoRef="DM4">1.22</DemoValue>
+							<DemoValue demoRef="DM5">20.41</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>19:00</StartTime>
+						<EndTime>20:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>THE NEIGHBORHOOD ENC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-06-29">
+						<Rate>2500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.10</DemoValue>
+							<DemoValue demoRef="DM1">1.46</DemoValue>
+							<DemoValue demoRef="DM2">1.65</DemoValue>
+							<DemoValue demoRef="DM3">1.92</DemoValue>
+							<DemoValue demoRef="DM4">0.83</DemoValue>
+							<DemoValue demoRef="DM5">14.15</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>20:00</StartTime>
+						<EndTime>21:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>FBI ENC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-06-29">
+						<Rate>4000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.01</DemoValue>
+							<DemoValue demoRef="DM1">1.37</DemoValue>
+							<DemoValue demoRef="DM2">1.55</DemoValue>
+							<DemoValue demoRef="DM3">1.79</DemoValue>
+							<DemoValue demoRef="DM4">0.76</DemoValue>
+							<DemoValue demoRef="DM5">12.95</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>21:00</StartTime>
+						<EndTime>22:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>CIA ENC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-06-29">
+						<Rate>2500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.04</DemoValue>
+							<DemoValue demoRef="DM1">1.43</DemoValue>
+							<DemoValue demoRef="DM2">1.63</DemoValue>
+							<DemoValue demoRef="DM3">1.88</DemoValue>
+							<DemoValue demoRef="DM4">0.76</DemoValue>
+							<DemoValue demoRef="DM5">13.33</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>19:00</StartTime>
+						<EndTime>20:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>NCIS ENC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-07" endDate="2026-09-13">
+						<Rate>2500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.44</DemoValue>
+							<DemoValue demoRef="DM1">2.01</DemoValue>
+							<DemoValue demoRef="DM2">2.32</DemoValue>
+							<DemoValue demoRef="DM3">2.98</DemoValue>
+							<DemoValue demoRef="DM4">1.11</DemoValue>
+							<DemoValue demoRef="DM5">18.51</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>20:00</StartTime>
+						<EndTime>21:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>NCIS ORIGINS ENC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-07" endDate="2026-09-13">
+						<Rate>2500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.81</DemoValue>
+							<DemoValue demoRef="DM1">1.13</DemoValue>
+							<DemoValue demoRef="DM2">1.26</DemoValue>
+							<DemoValue demoRef="DM3">1.54</DemoValue>
+							<DemoValue demoRef="DM4">0.62</DemoValue>
+							<DemoValue demoRef="DM5">10.43</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>21:00</StartTime>
+						<EndTime>22:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>NCIS SYDNEY ENC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-06-30">
+						<Rate>2500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.12</DemoValue>
+							<DemoValue demoRef="DM1">1.55</DemoValue>
+							<DemoValue demoRef="DM2">1.80</DemoValue>
+							<DemoValue demoRef="DM3">2.28</DemoValue>
+							<DemoValue demoRef="DM4">0.84</DemoValue>
+							<DemoValue demoRef="DM5">14.34</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>19:00</StartTime>
+						<EndTime>20:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>HARLAN COBEN'S FINAL TWIST ENC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-08" endDate="2026-07-08">
+						<Rate>5500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.98</DemoValue>
+							<DemoValue demoRef="DM1">1.27</DemoValue>
+							<DemoValue demoRef="DM2">1.38</DemoValue>
+							<DemoValue demoRef="DM3">1.54</DemoValue>
+							<DemoValue demoRef="DM4">0.77</DemoValue>
+							<DemoValue demoRef="DM5">12.72</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>19:00</StartTime>
+						<EndTime>20:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>BIG BROTHER</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-15" endDate="2026-09-13">
+						<Rate>5500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.13</DemoValue>
+							<DemoValue demoRef="DM1">1.27</DemoValue>
+							<DemoValue demoRef="DM2">1.23</DemoValue>
+							<DemoValue demoRef="DM3">1.33</DemoValue>
+							<DemoValue demoRef="DM4">1.05</DemoValue>
+							<DemoValue demoRef="DM5">14.50</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>20:00</StartTime>
+						<EndTime>21:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>NCIS ENC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-08" endDate="2026-07-08">
+						<Rate>2500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.44</DemoValue>
+							<DemoValue demoRef="DM1">2.01</DemoValue>
+							<DemoValue demoRef="DM2">2.32</DemoValue>
+							<DemoValue demoRef="DM3">2.98</DemoValue>
+							<DemoValue demoRef="DM4">1.11</DemoValue>
+							<DemoValue demoRef="DM5">18.51</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>20:30</StartTime>
+						<EndTime>21:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName><![CDATA[GEORGIE & MANDY ENC]]></AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-15" endDate="2026-09-13">
+						<Rate>2500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.41</DemoValue>
+							<DemoValue demoRef="DM1">1.97</DemoValue>
+							<DemoValue demoRef="DM2">2.22</DemoValue>
+							<DemoValue demoRef="DM3">2.92</DemoValue>
+							<DemoValue demoRef="DM4">1.11</DemoValue>
+							<DemoValue demoRef="DM5">18.13</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>21:00</StartTime>
+						<EndTime>22:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>ELSBETH ENC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-15" endDate="2026-09-13">
+						<Rate>3000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.91</DemoValue>
+							<DemoValue demoRef="DM1">1.28</DemoValue>
+							<DemoValue demoRef="DM2">1.45</DemoValue>
+							<DemoValue demoRef="DM3">1.79</DemoValue>
+							<DemoValue demoRef="DM4">0.67</DemoValue>
+							<DemoValue demoRef="DM5">11.65</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>19:00</StartTime>
+						<EndTime>20:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName><![CDATA[GEORGIE & MANDY ENC/GHOSTS ENC]]></AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-02" endDate="2026-07-02">
+						<Rate>5500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.11</DemoValue>
+							<DemoValue demoRef="DM1">1.52</DemoValue>
+							<DemoValue demoRef="DM2">1.69</DemoValue>
+							<DemoValue demoRef="DM3">2.17</DemoValue>
+							<DemoValue demoRef="DM4">0.86</DemoValue>
+							<DemoValue demoRef="DM5">14.26</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>19:00</StartTime>
+						<EndTime>20:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>BIG BROTHER</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-16" endDate="2026-09-13">
+						<Rate>5500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.52</DemoValue>
+							<DemoValue demoRef="DM1">1.70</DemoValue>
+							<DemoValue demoRef="DM2">1.68</DemoValue>
+							<DemoValue demoRef="DM3">1.81</DemoValue>
+							<DemoValue demoRef="DM4">1.36</DemoValue>
+							<DemoValue demoRef="DM5">19.52</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>20:00</StartTime>
+						<EndTime>21:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>MATLOCK ENC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-02" endDate="2026-07-02">
+						<Rate>4000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.64</DemoValue>
+							<DemoValue demoRef="DM1">0.86</DemoValue>
+							<DemoValue demoRef="DM2">0.96</DemoValue>
+							<DemoValue demoRef="DM3">1.23</DemoValue>
+							<DemoValue demoRef="DM4">0.49</DemoValue>
+							<DemoValue demoRef="DM5">8.26</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>20:00</StartTime>
+						<EndTime>21:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName><![CDATA[GEORGIE & MANDY ENC/GHOSTS ENC]]></AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-16" endDate="2026-07-16">
+						<Rate>4000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.11</DemoValue>
+							<DemoValue demoRef="DM1">1.52</DemoValue>
+							<DemoValue demoRef="DM2">1.69</DemoValue>
+							<DemoValue demoRef="DM3">2.17</DemoValue>
+							<DemoValue demoRef="DM4">0.86</DemoValue>
+							<DemoValue demoRef="DM5">14.26</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>21:00</StartTime>
+						<EndTime>22:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>ELSBETH ENC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-02" endDate="2026-07-02">
+						<Rate>3000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.70</DemoValue>
+							<DemoValue demoRef="DM1">1.00</DemoValue>
+							<DemoValue demoRef="DM2">1.15</DemoValue>
+							<DemoValue demoRef="DM3">1.46</DemoValue>
+							<DemoValue demoRef="DM4">0.52</DemoValue>
+							<DemoValue demoRef="DM5">9.00</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>21:00</StartTime>
+						<EndTime>22:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>MATLOCK ENC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-09" endDate="2026-09-13">
+						<Rate>3000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.90</DemoValue>
+							<DemoValue demoRef="DM1">1.22</DemoValue>
+							<DemoValue demoRef="DM2">1.36</DemoValue>
+							<DemoValue demoRef="DM3">1.76</DemoValue>
+							<DemoValue demoRef="DM4">0.66</DemoValue>
+							<DemoValue demoRef="DM5">11.55</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>19:00</StartTime>
+						<EndTime>20:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>SHERIFF'S COUNTRY ENC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-03" endDate="2026-07-03">
+						<Rate>3000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.74</DemoValue>
+							<DemoValue demoRef="DM1">1.03</DemoValue>
+							<DemoValue demoRef="DM2">1.18</DemoValue>
+							<DemoValue demoRef="DM3">1.48</DemoValue>
+							<DemoValue demoRef="DM4">0.64</DemoValue>
+							<DemoValue demoRef="DM5">9.48</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>19:00</StartTime>
+						<EndTime>20:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>BIG BROTHER UNLOCKED</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-24" endDate="2026-07-24">
+						<Rate>3000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.67</DemoValue>
+							<DemoValue demoRef="DM1">0.89</DemoValue>
+							<DemoValue demoRef="DM2">0.97</DemoValue>
+							<DemoValue demoRef="DM3">1.19</DemoValue>
+							<DemoValue demoRef="DM4">0.58</DemoValue>
+							<DemoValue demoRef="DM5">8.56</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>20:00</StartTime>
+						<EndTime>21:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>FIRE COUNTRY ENC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-17" endDate="2026-07-17">
+						<Rate>2500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.56</DemoValue>
+							<DemoValue demoRef="DM1">0.76</DemoValue>
+							<DemoValue demoRef="DM2">0.84</DemoValue>
+							<DemoValue demoRef="DM3">1.01</DemoValue>
+							<DemoValue demoRef="DM4">0.47</DemoValue>
+							<DemoValue demoRef="DM5">7.23</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>21:00</StartTime>
+						<EndTime>22:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>BOSTON BLUE ENC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-03" endDate="2026-09-13">
+						<Rate>4000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.57</DemoValue>
+							<DemoValue demoRef="DM1">0.76</DemoValue>
+							<DemoValue demoRef="DM2">0.84</DemoValue>
+							<DemoValue demoRef="DM3">1.00</DemoValue>
+							<DemoValue demoRef="DM4">0.47</DemoValue>
+							<DemoValue demoRef="DM5">7.27</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>19:00</StartTime>
+						<EndTime>20:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>CBS SATURDAY PRIME ENC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-04" endDate="2026-09-13">
+						<Rate>1000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.63</DemoValue>
+							<DemoValue demoRef="DM1">0.77</DemoValue>
+							<DemoValue demoRef="DM2">0.83</DemoValue>
+							<DemoValue demoRef="DM3">1.07</DemoValue>
+							<DemoValue demoRef="DM4">0.50</DemoValue>
+							<DemoValue demoRef="DM5">8.10</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>20:00</StartTime>
+						<EndTime>21:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>CBS SATURDAY PRIME ENC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-04" endDate="2026-07-04">
+						<Rate>1000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.81</DemoValue>
+							<DemoValue demoRef="DM1">1.09</DemoValue>
+							<DemoValue demoRef="DM2">1.21</DemoValue>
+							<DemoValue demoRef="DM3">1.38</DemoValue>
+							<DemoValue demoRef="DM4">0.62</DemoValue>
+							<DemoValue demoRef="DM5">10.56</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>21:00</StartTime>
+						<EndTime>22:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>48 HOURS ENC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-04" endDate="2026-09-13">
+						<Rate>1000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.76</DemoValue>
+							<DemoValue demoRef="DM1">0.96</DemoValue>
+							<DemoValue demoRef="DM2">1.02</DemoValue>
+							<DemoValue demoRef="DM3">1.17</DemoValue>
+							<DemoValue demoRef="DM4">0.58</DemoValue>
+							<DemoValue demoRef="DM5">9.81</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>18:00</StartTime>
+						<EndTime>19:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>60 MINUTES</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-05" endDate="2026-09-06">
+						<Rate>10000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">2.78</DemoValue>
+							<DemoValue demoRef="DM1">3.83</DemoValue>
+							<DemoValue demoRef="DM2">4.34</DemoValue>
+							<DemoValue demoRef="DM3">5.45</DemoValue>
+							<DemoValue demoRef="DM4">2.11</DemoValue>
+							<DemoValue demoRef="DM5">35.65</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>19:00</StartTime>
+						<EndTime>20:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>MARSHALLS ENC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-05" endDate="2026-07-05">
+						<Rate>10000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.82</DemoValue>
+							<DemoValue demoRef="DM1">2.41</DemoValue>
+							<DemoValue demoRef="DM2">2.71</DemoValue>
+							<DemoValue demoRef="DM3">3.35</DemoValue>
+							<DemoValue demoRef="DM4">1.35</DemoValue>
+							<DemoValue demoRef="DM5">23.65</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>19:00</StartTime>
+						<EndTime>20:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>BIG BROTHER</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-19" endDate="2026-09-06">
+						<Rate>4000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.30</DemoValue>
+							<DemoValue demoRef="DM1">1.49</DemoValue>
+							<DemoValue demoRef="DM2">1.48</DemoValue>
+							<DemoValue demoRef="DM3">1.62</DemoValue>
+							<DemoValue demoRef="DM4">1.10</DemoValue>
+							<DemoValue demoRef="DM5">16.75</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>20:00</StartTime>
+						<EndTime>21:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>TRACKER ENC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-08-30" endDate="2026-09-06">
+						<Rate>2500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.69</DemoValue>
+							<DemoValue demoRef="DM1">2.37</DemoValue>
+							<DemoValue demoRef="DM2">2.71</DemoValue>
+							<DemoValue demoRef="DM3">3.37</DemoValue>
+							<DemoValue demoRef="DM4">1.27</DemoValue>
+							<DemoValue demoRef="DM5">21.63</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>21:00</StartTime>
+						<EndTime>22:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>PRIME</DaypartName>
+				<AvailName>MARSHALS ENC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-05" endDate="2026-09-06">
+						<Rate>2500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.99</DemoValue>
+							<DemoValue demoRef="DM1">1.31</DemoValue>
+							<DemoValue demoRef="DM2">1.47</DemoValue>
+							<DemoValue demoRef="DM3">1.73</DemoValue>
+							<DemoValue demoRef="DM4">0.75</DemoValue>
+							<DemoValue demoRef="DM5">12.71</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>22:00</StartTime>
+						<EndTime>22:35</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LATE NEWS</DaypartName>
+				<AvailName>CBS 58 NEWS-10PM</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>1000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.86</DemoValue>
+							<DemoValue demoRef="DM1">2.60</DemoValue>
+							<DemoValue demoRef="DM2">2.99</DemoValue>
+							<DemoValue demoRef="DM3">4.00</DemoValue>
+							<DemoValue demoRef="DM4">1.37</DemoValue>
+							<DemoValue demoRef="DM5">23.91</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>22:00</StartTime>
+						<EndTime>23:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LATE NEWS</DaypartName>
+				<AvailName>CBS 58 NEWS-10PM (SAT)</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>600.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.13</DemoValue>
+							<DemoValue demoRef="DM1">1.54</DemoValue>
+							<DemoValue demoRef="DM2">1.75</DemoValue>
+							<DemoValue demoRef="DM3">2.22</DemoValue>
+							<DemoValue demoRef="DM4">0.86</DemoValue>
+							<DemoValue demoRef="DM5">14.53</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>22:00</StartTime>
+						<EndTime>23:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LATE NEWS</DaypartName>
+				<AvailName>CBS 58 NEWS-10PM (SUN)</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>600.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.40</DemoValue>
+							<DemoValue demoRef="DM1">1.92</DemoValue>
+							<DemoValue demoRef="DM2">2.19</DemoValue>
+							<DemoValue demoRef="DM3">2.78</DemoValue>
+							<DemoValue demoRef="DM4">1.06</DemoValue>
+							<DemoValue demoRef="DM5">17.99</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>22:35</StartTime>
+						<EndTime>23:37</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LATE FRINGE</DaypartName>
+				<AvailName>COMICS UNLEASHED</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>700.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.59</DemoValue>
+							<DemoValue demoRef="DM1">2.14</DemoValue>
+							<DemoValue demoRef="DM2">2.40</DemoValue>
+							<DemoValue demoRef="DM3">3.13</DemoValue>
+							<DemoValue demoRef="DM4">1.19</DemoValue>
+							<DemoValue demoRef="DM5">20.43</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>23:37</StartTime>
+						<EndTime>24:37</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LATE FRINGE</DaypartName>
+				<AvailName>FUNNY YOU SHOULD ASK</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>200.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.34</DemoValue>
+							<DemoValue demoRef="DM1">0.45</DemoValue>
+							<DemoValue demoRef="DM2">0.51</DemoValue>
+							<DemoValue demoRef="DM3">0.62</DemoValue>
+							<DemoValue demoRef="DM4">0.26</DemoValue>
+							<DemoValue demoRef="DM5">4.40</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>24:37</StartTime>
+						<EndTime>25:07</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LATE FRINGE</DaypartName>
+				<AvailName>JEOPARDY II</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>100.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.19</DemoValue>
+							<DemoValue demoRef="DM1">0.26</DemoValue>
+							<DemoValue demoRef="DM2">0.29</DemoValue>
+							<DemoValue demoRef="DM3">0.35</DemoValue>
+							<DemoValue demoRef="DM4">0.15</DemoValue>
+							<DemoValue demoRef="DM5">2.47</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>25:07</StartTime>
+						<EndTime>25:37</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LATE FRINGE</DaypartName>
+				<AvailName>DREW BARRYMORE SHOW</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>100.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.16</DemoValue>
+							<DemoValue demoRef="DM1">0.20</DemoValue>
+							<DemoValue demoRef="DM2">0.23</DemoValue>
+							<DemoValue demoRef="DM3">0.27</DemoValue>
+							<DemoValue demoRef="DM4">0.12</DemoValue>
+							<DemoValue demoRef="DM5">2.06</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>25:37</StartTime>
+						<EndTime>26:07</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LATE FRINGE</DaypartName>
+				<AvailName>LATE NEWS REPEAT</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>100.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.18</DemoValue>
+							<DemoValue demoRef="DM1">0.22</DemoValue>
+							<DemoValue demoRef="DM2">0.24</DemoValue>
+							<DemoValue demoRef="DM3">0.27</DemoValue>
+							<DemoValue demoRef="DM4">0.13</DemoValue>
+							<DemoValue demoRef="DM5">2.28</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>26:00</StartTime>
+						<EndTime>26:45</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LATE FRINGE</DaypartName>
+				<AvailName>48 HOURS</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>75.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.03</DemoValue>
+							<DemoValue demoRef="DM1">0.03</DemoValue>
+							<DemoValue demoRef="DM2">0.04</DemoValue>
+							<DemoValue demoRef="DM3">0.04</DemoValue>
+							<DemoValue demoRef="DM4">0.02</DemoValue>
+							<DemoValue demoRef="DM5">0.33</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>23:05</StartTime>
+						<EndTime>24:05</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LATE FRINGE</DaypartName>
+				<AvailName>FIRE COUNTRY</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>200.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.30</DemoValue>
+							<DemoValue demoRef="DM1">0.38</DemoValue>
+							<DemoValue demoRef="DM2">0.41</DemoValue>
+							<DemoValue demoRef="DM3">0.48</DemoValue>
+							<DemoValue demoRef="DM4">0.25</DemoValue>
+							<DemoValue demoRef="DM5">3.92</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>24:05</StartTime>
+						<EndTime>25:05</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LATE FRINGE</DaypartName>
+				<AvailName>NCIS HAWAII</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>150.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.15</DemoValue>
+							<DemoValue demoRef="DM1">0.19</DemoValue>
+							<DemoValue demoRef="DM2">0.21</DemoValue>
+							<DemoValue demoRef="DM3">0.24</DemoValue>
+							<DemoValue demoRef="DM4">0.13</DemoValue>
+							<DemoValue demoRef="DM5">1.94</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>25:05</StartTime>
+						<EndTime>26:05</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LATE FRINGE</DaypartName>
+				<AvailName>DEEP WATER SAVAGE</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>75.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.10</DemoValue>
+							<DemoValue demoRef="DM1">0.12</DemoValue>
+							<DemoValue demoRef="DM2">0.13</DemoValue>
+							<DemoValue demoRef="DM3">0.14</DemoValue>
+							<DemoValue demoRef="DM4">0.08</DemoValue>
+							<DemoValue demoRef="DM5">1.25</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>26:05</StartTime>
+						<EndTime>26:59</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LATE FRINGE</DaypartName>
+				<AvailName>LIVE PD</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>75.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.01</DemoValue>
+							<DemoValue demoRef="DM1">0.01</DemoValue>
+							<DemoValue demoRef="DM2">0.01</DemoValue>
+							<DemoValue demoRef="DM3">0.01</DemoValue>
+							<DemoValue demoRef="DM4">0.01</DemoValue>
+							<DemoValue demoRef="DM5">0.12</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>23:05</StartTime>
+						<EndTime>24:05</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LATE FRINGE</DaypartName>
+				<AvailName>FIRE COUNTRY</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>150.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.33</DemoValue>
+							<DemoValue demoRef="DM1">0.41</DemoValue>
+							<DemoValue demoRef="DM2">0.44</DemoValue>
+							<DemoValue demoRef="DM3">0.51</DemoValue>
+							<DemoValue demoRef="DM4">0.26</DemoValue>
+							<DemoValue demoRef="DM5">4.22</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>24:00</StartTime>
+						<EndTime>25:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LATE FRINGE</DaypartName>
+				<AvailName>NCIS: HAWAII</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>100.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.15</DemoValue>
+							<DemoValue demoRef="DM1">0.19</DemoValue>
+							<DemoValue demoRef="DM2">0.21</DemoValue>
+							<DemoValue demoRef="DM3">0.23</DemoValue>
+							<DemoValue demoRef="DM4">0.12</DemoValue>
+							<DemoValue demoRef="DM5">1.93</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>25:00</StartTime>
+						<EndTime>26:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LATE FRINGE</DaypartName>
+				<AvailName>S.W.A.T.</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>50.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.11</DemoValue>
+							<DemoValue demoRef="DM1">0.13</DemoValue>
+							<DemoValue demoRef="DM2">0.14</DemoValue>
+							<DemoValue demoRef="DM3">0.16</DemoValue>
+							<DemoValue demoRef="DM4">0.09</DemoValue>
+							<DemoValue demoRef="DM5">1.43</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>26:00</StartTime>
+						<EndTime>26:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LATE FRINGE</DaypartName>
+				<AvailName>PAWN STARS</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>50.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.01</DemoValue>
+							<DemoValue demoRef="DM1">0.02</DemoValue>
+							<DemoValue demoRef="DM2">0.02</DemoValue>
+							<DemoValue demoRef="DM3">0.02</DemoValue>
+							<DemoValue demoRef="DM4">0.01</DemoValue>
+							<DemoValue demoRef="DM5">0.17</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>26:30</StartTime>
+						<EndTime>26:59</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LATE FRINGE</DaypartName>
+				<AvailName>PAWN STARS</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-06-29" endDate="2026-09-13">
+						<Rate>50.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.01</DemoValue>
+							<DemoValue demoRef="DM1">0.01</DemoValue>
+							<DemoValue demoRef="DM2">0.01</DemoValue>
+							<DemoValue demoRef="DM3">0.01</DemoValue>
+							<DemoValue demoRef="DM4">0.01</DemoValue>
+							<DemoValue demoRef="DM5">0.10</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>11:00</StartTime>
+						<EndTime>14:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>GOLF GENESIS SCOTTISH OPEN</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-11" endDate="2026-07-11">
+						<Rate>3500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.16</DemoValue>
+							<DemoValue demoRef="DM1">1.57</DemoValue>
+							<DemoValue demoRef="DM2">1.79</DemoValue>
+							<DemoValue demoRef="DM3">1.96</DemoValue>
+							<DemoValue demoRef="DM4">0.89</DemoValue>
+							<DemoValue demoRef="DM5">14.90</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>12:00</StartTime>
+						<EndTime>14:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>WNBA - SKY AT LIBERTY</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-08-29" endDate="2026-08-29">
+						<Rate>750.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.39</DemoValue>
+							<DemoValue demoRef="DM1">0.51</DemoValue>
+							<DemoValue demoRef="DM2">0.57</DemoValue>
+							<DemoValue demoRef="DM3">0.64</DemoValue>
+							<DemoValue demoRef="DM4">0.32</DemoValue>
+							<DemoValue demoRef="DM5">4.95</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>12:00</StartTime>
+						<EndTime>14:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>WNBA - ACES AT LYNX</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-08-08" endDate="2026-08-08">
+						<Rate>1250.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.39</DemoValue>
+							<DemoValue demoRef="DM1">0.51</DemoValue>
+							<DemoValue demoRef="DM2">0.57</DemoValue>
+							<DemoValue demoRef="DM3">0.64</DemoValue>
+							<DemoValue demoRef="DM4">0.32</DemoValue>
+							<DemoValue demoRef="DM5">4.95</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>13:30</StartTime>
+						<EndTime>14:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>NCAA COLLEGE FTBL KICKOFF SHOW</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-09-12" endDate="2026-09-12">
+						<Rate>750.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.26</DemoValue>
+							<DemoValue demoRef="DM1">0.34</DemoValue>
+							<DemoValue demoRef="DM2">0.37</DemoValue>
+							<DemoValue demoRef="DM3">0.41</DemoValue>
+							<DemoValue demoRef="DM4">0.21</DemoValue>
+							<DemoValue demoRef="DM5">3.38</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>14:00</StartTime>
+						<EndTime>14:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>NCAA COLLEGE FTBL TODAY</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-09-05" endDate="2026-09-05">
+						<Rate>1000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.24</DemoValue>
+							<DemoValue demoRef="DM1">0.31</DemoValue>
+							<DemoValue demoRef="DM2">0.33</DemoValue>
+							<DemoValue demoRef="DM3">0.38</DemoValue>
+							<DemoValue demoRef="DM4">0.19</DemoValue>
+							<DemoValue demoRef="DM5">3.14</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>14:00</StartTime>
+						<EndTime>17:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>GOLF JOHN DEERE CLASSIC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-04" endDate="2026-07-04">
+						<Rate>3500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.14</DemoValue>
+							<DemoValue demoRef="DM1">1.57</DemoValue>
+							<DemoValue demoRef="DM2">1.82</DemoValue>
+							<DemoValue demoRef="DM3">2.04</DemoValue>
+							<DemoValue demoRef="DM4">0.90</DemoValue>
+							<DemoValue demoRef="DM5">14.64</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>14:00</StartTime>
+						<EndTime>17:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>GOLF 3M OPEN</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-25" endDate="2026-07-25">
+						<Rate>3500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.39</DemoValue>
+							<DemoValue demoRef="DM1">1.87</DemoValue>
+							<DemoValue demoRef="DM2">2.13</DemoValue>
+							<DemoValue demoRef="DM3">2.40</DemoValue>
+							<DemoValue demoRef="DM4">1.05</DemoValue>
+							<DemoValue demoRef="DM5">17.82</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>14:00</StartTime>
+						<EndTime>17:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>GOLF ROCKET CLASSIC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-08-01" endDate="2026-08-01">
+						<Rate>3500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.67</DemoValue>
+							<DemoValue demoRef="DM1">0.83</DemoValue>
+							<DemoValue demoRef="DM2">0.92</DemoValue>
+							<DemoValue demoRef="DM3">0.98</DemoValue>
+							<DemoValue demoRef="DM4">0.54</DemoValue>
+							<DemoValue demoRef="DM5">8.58</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>14:00</StartTime>
+						<EndTime>17:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>GOLF WYNDHAM CHAMPIONSHIP</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-08-08" endDate="2026-08-08">
+						<Rate>3500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.65</DemoValue>
+							<DemoValue demoRef="DM1">0.87</DemoValue>
+							<DemoValue demoRef="DM2">0.98</DemoValue>
+							<DemoValue demoRef="DM3">1.18</DemoValue>
+							<DemoValue demoRef="DM4">0.50</DemoValue>
+							<DemoValue demoRef="DM5">8.40</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>14:00</StartTime>
+						<EndTime>17:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>GOLF ST JUDE CHAMPIONSHIP</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-08-15" endDate="2026-08-15">
+						<Rate>3500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.79</DemoValue>
+							<DemoValue demoRef="DM1">2.53</DemoValue>
+							<DemoValue demoRef="DM2">2.90</DemoValue>
+							<DemoValue demoRef="DM3">3.28</DemoValue>
+							<DemoValue demoRef="DM4">1.35</DemoValue>
+							<DemoValue demoRef="DM5">23.00</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>14:00</StartTime>
+						<EndTime>17:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>GOLF BMW CHAMPIONSHIP</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-08-22" endDate="2026-08-22">
+						<Rate>3500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">5.74</DemoValue>
+							<DemoValue demoRef="DM1">7.54</DemoValue>
+							<DemoValue demoRef="DM2">8.47</DemoValue>
+							<DemoValue demoRef="DM3">9.04</DemoValue>
+							<DemoValue demoRef="DM4">4.35</DemoValue>
+							<DemoValue demoRef="DM5">73.69</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>14:00</StartTime>
+						<EndTime>18:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>GOLF TOUR CHAMPIONSHIP</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-08-29" endDate="2026-08-29">
+						<Rate>3500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.49</DemoValue>
+							<DemoValue demoRef="DM1">0.66</DemoValue>
+							<DemoValue demoRef="DM2">0.74</DemoValue>
+							<DemoValue demoRef="DM3">0.94</DemoValue>
+							<DemoValue demoRef="DM4">0.37</DemoValue>
+							<DemoValue demoRef="DM5">6.28</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>14:30</StartTime>
+						<EndTime>18:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>NCAA BIG10 FTBL - BOISE STATE AT OREGON</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-09-05" endDate="2026-09-05">
+						<Rate>5000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.47</DemoValue>
+							<DemoValue demoRef="DM1">1.85</DemoValue>
+							<DemoValue demoRef="DM2">2.04</DemoValue>
+							<DemoValue demoRef="DM3">2.10</DemoValue>
+							<DemoValue demoRef="DM4">1.25</DemoValue>
+							<DemoValue demoRef="DM5">19.03</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>15:00</StartTime>
+						<EndTime>17:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>NWSL - BAY VS NORTH CAROLINA</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-18" endDate="2026-07-18">
+						<Rate>1000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.21</DemoValue>
+							<DemoValue demoRef="DM1">0.25</DemoValue>
+							<DemoValue demoRef="DM2">0.27</DemoValue>
+							<DemoValue demoRef="DM3">0.30</DemoValue>
+							<DemoValue demoRef="DM4">0.18</DemoValue>
+							<DemoValue demoRef="DM5">2.71</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>18:00</StartTime>
+						<EndTime>18:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>NCAA COLLEGE FTBL POST-GAME</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-09-12" endDate="2026-09-12">
+						<Rate>1200.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.22</DemoValue>
+							<DemoValue demoRef="DM1">1.53</DemoValue>
+							<DemoValue demoRef="DM2">1.67</DemoValue>
+							<DemoValue demoRef="DM3">1.86</DemoValue>
+							<DemoValue demoRef="DM4">1.00</DemoValue>
+							<DemoValue demoRef="DM5">15.87</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>11:00</StartTime>
+						<EndTime>12:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>PBR BULL RIDING</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-26" endDate="2026-07-26">
+						<Rate>1000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.28</DemoValue>
+							<DemoValue demoRef="DM1">0.34</DemoValue>
+							<DemoValue demoRef="DM2">0.36</DemoValue>
+							<DemoValue demoRef="DM3">0.39</DemoValue>
+							<DemoValue demoRef="DM4">0.23</DemoValue>
+							<DemoValue demoRef="DM5">3.61</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>11:00</StartTime>
+						<EndTime>12:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>CBS NFL TODAY- PACKERS</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-09-13" endDate="2026-09-13">
+						<Rate>10000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.93</DemoValue>
+							<DemoValue demoRef="DM1">1.10</DemoValue>
+							<DemoValue demoRef="DM2">1.14</DemoValue>
+							<DemoValue demoRef="DM3">1.14</DemoValue>
+							<DemoValue demoRef="DM4">0.80</DemoValue>
+							<DemoValue demoRef="DM5">12.01</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>11:00</StartTime>
+						<EndTime>12:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>CBS NFL TODAY</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-09-13" endDate="2026-09-13">
+						<Rate>3000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.93</DemoValue>
+							<DemoValue demoRef="DM1">1.10</DemoValue>
+							<DemoValue demoRef="DM2">1.14</DemoValue>
+							<DemoValue demoRef="DM3">1.14</DemoValue>
+							<DemoValue demoRef="DM4">0.80</DemoValue>
+							<DemoValue demoRef="DM5">12.01</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>11:00</StartTime>
+						<EndTime>14:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>GOLF GENESIS SCOTTISH OPEN</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-12" endDate="2026-07-12">
+						<Rate>3500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.41</DemoValue>
+							<DemoValue demoRef="DM1">1.87</DemoValue>
+							<DemoValue demoRef="DM2">2.11</DemoValue>
+							<DemoValue demoRef="DM3">2.25</DemoValue>
+							<DemoValue demoRef="DM4">1.07</DemoValue>
+							<DemoValue demoRef="DM5">18.06</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>12:00</StartTime>
+						<EndTime>15:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>NFL EARLY - WK 1 BILLS AT TEXANS</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-09-13" endDate="2026-09-13">
+						<Rate>10000.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">6.27</DemoValue>
+							<DemoValue demoRef="DM1">7.47</DemoValue>
+							<DemoValue demoRef="DM2">7.97</DemoValue>
+							<DemoValue demoRef="DM3">7.96</DemoValue>
+							<DemoValue demoRef="DM4">5.52</DemoValue>
+							<DemoValue demoRef="DM5">81.26</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>12:30</StartTime>
+						<EndTime>17:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>GOLF TOUR CHAMPIONSHIP</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-08-30" endDate="2026-08-30">
+						<Rate>3500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">2.42</DemoValue>
+							<DemoValue demoRef="DM1">3.28</DemoValue>
+							<DemoValue demoRef="DM2">3.71</DemoValue>
+							<DemoValue demoRef="DM3">3.94</DemoValue>
+							<DemoValue demoRef="DM4">1.86</DemoValue>
+							<DemoValue demoRef="DM5">31.10</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>13:00</StartTime>
+						<EndTime>17:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>GOLF ST JUDE CHAMPIONSHIP</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-08-16" endDate="2026-08-16">
+						<Rate>3500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">3.52</DemoValue>
+							<DemoValue demoRef="DM1">4.71</DemoValue>
+							<DemoValue demoRef="DM2">5.27</DemoValue>
+							<DemoValue demoRef="DM3">5.63</DemoValue>
+							<DemoValue demoRef="DM4">2.71</DemoValue>
+							<DemoValue demoRef="DM5">45.16</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>13:00</StartTime>
+						<EndTime>17:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>GOLF BMW CHAMPIONSHIP</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-08-23" endDate="2026-08-23">
+						<Rate>3500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.96</DemoValue>
+							<DemoValue demoRef="DM1">2.74</DemoValue>
+							<DemoValue demoRef="DM2">3.11</DemoValue>
+							<DemoValue demoRef="DM3">3.37</DemoValue>
+							<DemoValue demoRef="DM4">1.71</DemoValue>
+							<DemoValue demoRef="DM5">25.15</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>14:00</StartTime>
+						<EndTime>17:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>GOLF JOHN DEERE CLASSIC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-05" endDate="2026-07-05">
+						<Rate>3500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">2.47</DemoValue>
+							<DemoValue demoRef="DM1">3.39</DemoValue>
+							<DemoValue demoRef="DM2">3.88</DemoValue>
+							<DemoValue demoRef="DM3">4.31</DemoValue>
+							<DemoValue demoRef="DM4">1.93</DemoValue>
+							<DemoValue demoRef="DM5">31.70</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>14:00</StartTime>
+						<EndTime>17:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>GOLF 3M OPEN</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-07-26" endDate="2026-07-26">
+						<Rate>3500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.13</DemoValue>
+							<DemoValue demoRef="DM1">1.54</DemoValue>
+							<DemoValue demoRef="DM2">1.76</DemoValue>
+							<DemoValue demoRef="DM3">2.01</DemoValue>
+							<DemoValue demoRef="DM4">0.88</DemoValue>
+							<DemoValue demoRef="DM5">14.52</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>14:00</StartTime>
+						<EndTime>17:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>GOLF ROCKET CLASSIC</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-08-02" endDate="2026-08-02">
+						<Rate>3500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.73</DemoValue>
+							<DemoValue demoRef="DM1">2.38</DemoValue>
+							<DemoValue demoRef="DM2">2.73</DemoValue>
+							<DemoValue demoRef="DM3">2.91</DemoValue>
+							<DemoValue demoRef="DM4">1.42</DemoValue>
+							<DemoValue demoRef="DM5">22.19</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>14:00</StartTime>
+						<EndTime>17:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>SPORTS</DaypartName>
+				<AvailName>GOLF WYNDHAM CHAMPIONSHIP</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2026-08-09" endDate="2026-08-09">
+						<Rate>3500.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.11</DemoValue>
+							<DemoValue demoRef="DM1">1.57</DemoValue>
+							<DemoValue demoRef="DM2">1.78</DemoValue>
+							<DemoValue demoRef="DM3">1.93</DemoValue>
+							<DemoValue demoRef="DM4">0.90</DemoValue>
+							<DemoValue demoRef="DM5">14.27</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+		</AvailList>
+	</Proposal>
+</AAAA-Message>
