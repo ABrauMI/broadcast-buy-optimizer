@@ -88,7 +88,9 @@ def _group_avails_into_rows(eligible_avails, spots):
     identities = {}
     for a in eligible_avails:
         key = (a._category, a.station, a.program_name, a.start_min, a.end_min)
-        info = identities.setdefault(key, {"days": set(), "rate": a.rate, "rating": a.rating})
+        info = identities.setdefault(
+            key, {"days": set(), "rate": a.rate, "rating": a.rating, "daypart_name": a.daypart_name}
+        )
         info["days"].update(a.days)
 
     bought_counts = defaultdict(lambda: defaultdict(int))
@@ -102,7 +104,8 @@ def _group_avails_into_rows(eligible_avails, spots):
         day_counts = {d: counts.get(d, 0) for d in info["days"]}
         rows.append(
             {
-                "category": category,
+                "category": category,  # internal buy tier -- drives the fill color
+                "daypart": info["daypart_name"],  # as given on the rate card -- what's displayed
                 "station": station,
                 "program": program,
                 "start_min": start_min,
@@ -201,7 +204,7 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
     )
 
     headers = (
-        ["Category", "Station", "Program", "Time"]
+        ["Daypart", "Station", "Program", "Time"]
         + DAY_HEADER_LABELS
         + ["Spots/Wk", "Rate", "Rating", "CPP", "Wkly $", "Wkly GRPs", "% Mkt GRPs"]
     )
@@ -221,7 +224,7 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
         station = row_data["station"]
         fill = CATEGORY_FILL.get(row_data["category"])
         for col, value in (
-            (COL_CATEGORY, row_data["category"]),
+            (COL_CATEGORY, row_data["daypart"]),
             (COL_STATION, row_data["station"]),
             (COL_PROGRAM, row_data["program"]),
         ):
