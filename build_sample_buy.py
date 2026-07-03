@@ -24,6 +24,12 @@ def main():
         "--latest-time", default="23:00", help="No spots after this clock time (default 11:00 PM)"
     )
     parser.add_argument("-o", "--output", default="output/sample_buy.xlsx")
+    parser.add_argument(
+        "--market-name", default=None, help="Also write a Strata-importable .sbx order for this market"
+    )
+    parser.add_argument("--flight-start", default=None, help="Flight start date, YYYY-MM-DD (requires --market-name)")
+    parser.add_argument("--flight-end", default=None, help="Flight end date, YYYY-MM-DD (requires --market-name)")
+    parser.add_argument("--campaign-name", default=None, help="Campaign name for the Strata order (default: Sample Buy)")
     args = parser.parse_args()
 
     paths = []
@@ -31,7 +37,7 @@ def main():
         matches = sorted(glob.glob(pattern))
         paths.extend(matches if matches else [pattern])
 
-    result, log_lines = run_pipeline(
+    result, log_lines, strata_path = run_pipeline(
         paths,
         args.output,
         target_grps=args.target_grps,
@@ -39,6 +45,10 @@ def main():
         target_demo_age=args.target_demo_age,
         earliest_time=args.earliest_time,
         latest_time=args.latest_time,
+        market_name=args.market_name,
+        flight_start=args.flight_start,
+        flight_end=args.flight_end,
+        campaign_name=args.campaign_name,
     )
 
     for line in log_lines:
@@ -54,6 +64,8 @@ def main():
     for w in result.warnings:
         print(f"NOTE: {w}")
     print(f"\nWrote {args.output}")
+    if strata_path:
+        print(f"Wrote {strata_path}")
 
 
 if __name__ == "__main__":

@@ -83,8 +83,12 @@ VM, rather than a laptop).
 
 1. In the channel, type `/sample-buy`.
 2. Fill in the modal: target GRPs, demo, and the earliest/latest spot time.
+   Optionally also fill in market name, flight start/end date, and campaign
+   name -- leave all four blank to skip this, or fill in all of market/start/end
+   to also get a Strata-importable order.
 3. The bot posts a message with a **Build Sample Buy** button. Reply to that
    message (in the thread) with your station rate card XML files -- one
    message or several, any number of stations.
 4. Click **Build Sample Buy**. The bot runs the same logic as the CLI and
-   uploads the resulting workbook right into the thread.
+   uploads the resulting workbook (and, if you filled in the Strata fields,
+   a `.sbx` order file) right into the thread.

@@ -16,6 +16,7 @@ Run with:
   SLACK_BOT_TOKEN=xoxb-... SLACK_APP_TOKEN=xapp-... python3 -m slack_app.app
 """
 
+import datetime
 import json
 import logging
 import os
@@ -41,14 +42,19 @@ DEFAULTS = {
     "demo_age": "35",
     "earliest_time": "7:00",
     "latest_time": "23:00",
+    "market_name": "",
+    "flight_start": "",
+    "flight_end": "",
+    "campaign_name": "",
 }
 
 
 def _modal_view(channel_id):
-    def text_input(block_id, label, initial):
-        return {
+    def text_input(block_id, label, initial, optional=False, hint=None):
+        block = {
             "type": "input",
             "block_id": block_id,
+            "optional": optional,
             "label": {"type": "plain_text", "text": label},
             "element": {
                 "type": "plain_text_input",
@@ -56,6 +62,9 @@ def _modal_view(channel_id):
                 "initial_value": initial,
             },
         }
+        if hint:
+            block["hint"] = {"type": "plain_text", "text": hint}
+        return block
 
     return {
         "type": "modal",
@@ -77,6 +86,33 @@ def _modal_view(channel_id):
             text_input("demo_age", "Target demo age (e.g. 35)", DEFAULTS["demo_age"]),
             text_input("earliest_time", "Earliest spot time (HH:MM)", DEFAULTS["earliest_time"]),
             text_input("latest_time", "Latest spot time (HH:MM)", DEFAULTS["latest_time"]),
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "*Optional* -- fill these in to also get a Strata-importable order (.sbx) alongside the Excel workbook. Leave blank to skip it.",
+                },
+            },
+            text_input("market_name", "Market name (e.g. Milwaukee, WI)", DEFAULTS["market_name"], optional=True),
+            text_input(
+                "flight_start",
+                "Flight start date (YYYY-MM-DD)",
+                DEFAULTS["flight_start"],
+                optional=True,
+            ),
+            text_input(
+                "flight_end",
+                "Flight end date (YYYY-MM-DD)",
+                DEFAULTS["flight_end"],
+                optional=True,
+            ),
+            text_input(
+                "campaign_name",
+                "Campaign name",
+                DEFAULTS["campaign_name"],
+                optional=True,
+                hint="Defaults to \"Sample Buy\" if left blank.",
+            ),
         ],
     }
 
@@ -106,6 +142,22 @@ def handle_modal_submission(ack, body, client, view):
         if ":" not in text or not text.replace(":", "").isdigit():
             errors[field] = "Use HH:MM, e.g. 7:00 or 23:00"
 
+    strata_fields = ("market_name", "flight_start", "flight_end")
+    strata_given = [f for f in strata_fields if raw.get(f)]
+    if strata_given and len(strata_given) < len(strata_fields):
+        for f in strata_fields:
+            if not raw.get(f):
+                errors[f] = "Fill in all three (market, start, end) to also get a Strata order, or leave all blank to skip it."
+    elif strata_given:
+        for field in ("flight_start", "flight_end"):
+            try:
+                datetime.date.fromisoformat(raw[field])
+            except ValueError:
+                errors[field] = "Use YYYY-MM-DD, e.g. 2026-07-06"
+        if "flight_start" not in errors and "flight_end" not in errors:
+            if datetime.date.fromisoformat(raw["flight_end"]) < datetime.date.fromisoformat(raw["flight_start"]):
+                errors["flight_end"] = "Flight end must be on or after flight start"
+
     if errors:
         ack(response_action="errors", errors=errors)
         return
@@ -119,6 +171,10 @@ def handle_modal_submission(ack, body, client, view):
         "demo_age": demo_age,
         "earliest_time": raw["earliest_time"] or DEFAULTS["earliest_time"],
         "latest_time": raw["latest_time"] or DEFAULTS["latest_time"],
+        "market_name": raw.get("market_name") or None,
+        "flight_start": raw.get("flight_start") or None,
+        "flight_end": raw.get("flight_end") or None,
+        "campaign_name": raw.get("campaign_name") or None,
     }
 
     user_id = body["user"]["id"]
@@ -126,10 +182,18 @@ def handle_modal_submission(ack, body, client, view):
         f"*New sample buy requested by <@{user_id}>*\n"
         f"Target: *{params['target_grps']:.0f} GRPs/week* | "
         f"Demo: *{params['demo_group']} {params['demo_age']}+* | "
-        f"Window: *{params['earliest_time']}-{params['latest_time']}*\n\n"
-        f"Reply in this thread with your station rate card XML files "
-        f"(one message or several, any number of stations). "
-        f"Click *Build Sample Buy* below once they're all in."
+        f"Window: *{params['earliest_time']}-{params['latest_time']}*\n"
+    )
+    if params["market_name"]:
+        campaign_suffix = f" ({params['campaign_name']})" if params["campaign_name"] else ""
+        summary += (
+            f"Strata order: *{params['market_name']}*, "
+            f"{params['flight_start']} to {params['flight_end']}{campaign_suffix}\n"
+        )
+    summary += (
+        "\nReply in this thread with your station rate card XML files "
+        "(one message or several, any number of stations). "
+        "Click *Build Sample Buy* below once they're all in."
     )
     posted = client.chat_postMessage(
         channel=channel,
@@ -207,7 +271,7 @@ def handle_build_button(ack, body, client):
     output_path = os.path.join(output_dir, "sample_buy.xlsx")
 
     try:
-        result, log_lines = run_pipeline(
+        result, log_lines, strata_path = run_pipeline(
             session.file_paths,
             output_path,
             target_grps=session.params["target_grps"],
@@ -215,6 +279,10 @@ def handle_build_button(ack, body, client):
             target_demo_age=session.params["demo_age"],
             earliest_time=session.params["earliest_time"],
             latest_time=session.params["latest_time"],
+            market_name=session.params.get("market_name"),
+            flight_start=session.params.get("flight_start"),
+            flight_end=session.params.get("flight_end"),
+            campaign_name=session.params.get("campaign_name"),
         )
     except Exception:
         logger.exception("Sample buy pipeline failed")
@@ -234,12 +302,17 @@ def handle_build_button(ack, body, client):
     )
     for w in result.warnings:
         summary += f"\n:warning: {w}"
+    if strata_path:
+        summary += "\nIncludes a Strata-importable order (.sbx) for this flight."
+
+    files = [{"file": output_path, "filename": "sample_buy.xlsx"}]
+    if strata_path:
+        files.append({"file": strata_path, "filename": "sample_buy.sbx"})
 
     client.files_upload_v2(
         channel=channel,
         thread_ts=thread_ts,
-        file=output_path,
-        filename="sample_buy.xlsx",
+        file_uploads=files,
         initial_comment=summary,
     )
     sessions.discard(thread_ts)

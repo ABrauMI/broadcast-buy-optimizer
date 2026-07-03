@@ -1,9 +1,12 @@
 """Shared parse -> build -> export pipeline, used by both the CLI and the
 Slack app so neither has to duplicate the wiring."""
 
+import os
+
 from .builder import build_sample_buy
 from .excel_export import write_workbook
 from .parser import parse_rate_card
+from .strata_export import write_strata_order
 
 
 def parse_clock(text):
@@ -22,10 +25,19 @@ def run_pipeline(
     target_demo_age=35,
     earliest_time="7:00",
     latest_time="23:00",
+    market_name=None,
+    flight_start=None,
+    flight_end=None,
+    campaign_name=None,
+    strata_output_path=None,
 ):
     """Parses every rate card, builds the sample buy, and writes the workbook
-    to output_path. Returns (result, log_lines) -- log_lines mirrors what the
-    CLI prints, for callers (like the Slack app) that want to surface it."""
+    to output_path. Returns (result, log_lines, strata_path) -- log_lines
+    mirrors what the CLI prints, for callers (like the Slack app) that want
+    to surface it. strata_path is None unless market_name/flight_start/
+    flight_end are all supplied, in which case a Strata-importable .sbx
+    order is also written (defaulting next to output_path) and its path
+    returned."""
     all_avails = []
     log_lines = []
     for path in xml_paths:
@@ -47,4 +59,18 @@ def run_pipeline(
     demo_label = f"{target_demo_group} {target_demo_age}+"
     write_workbook(result, output_path, target_demo_label=demo_label)
 
-    return result, log_lines
+    strata_path = None
+    if market_name and flight_start and flight_end:
+        strata_path = strata_output_path or os.path.splitext(output_path)[0] + ".sbx"
+        write_strata_order(
+            result,
+            strata_path,
+            market_name=market_name,
+            flight_start=flight_start,
+            flight_end=flight_end,
+            target_demo_group=target_demo_group,
+            target_demo_age=target_demo_age,
+            campaign_name=campaign_name,
+        )
+
+    return result, log_lines, strata_path
