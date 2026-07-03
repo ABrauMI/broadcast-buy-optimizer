@@ -30,6 +30,8 @@ CATEGORY_FILL = {
     "Daytime": PatternFill(start_color="FFF2CC", end_color="FFF2CC", fill_type="solid"),
 }
 DAY_MARK_FILL = PatternFill(start_color="70AD47", end_color="70AD47", fill_type="solid")
+SUBTOTAL_FILL = PatternFill(start_color="D9D9D9", end_color="D9D9D9", fill_type="solid")
+SUBTOTAL_BORDER = Border(top=Side(style="medium", color="808080"), bottom=Side(style="thin", color="808080"))
 DAY_COLS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 DAY_HEADER_LABELS = ["M", "T", "W", "Th", "F", "Sa", "Su"]
 
@@ -116,11 +118,10 @@ def _group_avails_into_rows(eligible_avails, spots):
     return rows
 
 
-def _write_station_summary_table(ws, result, start_row, stations, grid_first_row, grid_last_row, grid_total_row):
+def _write_station_summary_table(ws, result, start_row, stations, station_subtotal_row, grid_total_row):
     """Compact 'totals by station, at a glance' block above the main grid.
-    Every figure is a live formula pulling from the grid below, so it
-    stays correct if the grid's spot counts are edited."""
-    station_col = _cl(COL_STATION)
+    References each station's own subtotal row in the grid below (rather
+    than re-deriving the sum), so it stays correct if the grid is edited."""
     spots_col = _cl(COL_SPOTS)
     cost_col = _cl(COL_WKLY_COST)
     grps_col = _cl(COL_WKLY_GRPS)
@@ -134,20 +135,11 @@ def _write_station_summary_table(ws, result, start_row, stations, grid_first_row
 
     r = header_row + 1
     for station in stations:
-        rng = lambda col: f"{col}{grid_first_row}:{col}{grid_last_row}"
+        sub_row = station_subtotal_row[station]
         ws.cell(row=r, column=1, value=station)
-        ws.cell(
-            row=r, column=2,
-            value=f'=SUMIF({rng(station_col)},"{station}",{rng(spots_col)})',
-        )
-        ws.cell(
-            row=r, column=3,
-            value=f'=SUMIF({rng(station_col)},"{station}",{rng(cost_col)})',
-        )
-        ws.cell(
-            row=r, column=4,
-            value=f'=SUMIF({rng(station_col)},"{station}",{rng(grps_col)})',
-        )
+        ws.cell(row=r, column=2, value=f"={spots_col}{sub_row}")
+        ws.cell(row=r, column=3, value=f"={cost_col}{sub_row}")
+        ws.cell(row=r, column=4, value=f"={grps_col}{sub_row}")
         ws.cell(row=r, column=5, value=f"=IFERROR(C{r}/D{r},0)")
         ws.cell(
             row=r, column=6,
@@ -186,17 +178,28 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
     stations = sorted({rd["station"] for rd in rows})
 
     # Layout is fully determined up front so the station-summary formulas
-    # (written first, but referencing the grid below) point at the right rows.
+    # (written first, but referencing the grid below) point at the right
+    # rows. Each station's block of data rows is followed by a subtotal
+    # row and a blank separator row before the next station starts.
     summary_start = 4
     summary_header_row = summary_start + 1
     summary_market_row = summary_header_row + 1 + len(stations)
     header_row = summary_market_row + 2
-    grid_first_row = header_row + 1
-    grid_last_row = grid_first_row + len(rows) - 1
-    total_row = grid_last_row + 1
+
+    station_data_range = {}  # station -> (first_row, last_row)
+    station_subtotal_row = {}
+    r = header_row + 1
+    for station in stations:
+        n = sum(1 for rd in rows if rd["station"] == station)
+        station_data_range[station] = (r, r + n - 1)
+        r += n
+        station_subtotal_row[station] = r
+        r += 1  # subtotal row
+        r += 1  # blank separator row
+    total_row = r
 
     _write_station_summary_table(
-        ws, result, summary_start, stations, grid_first_row, grid_last_row, total_row
+        ws, result, summary_start, stations, station_subtotal_row, total_row
     )
 
     headers = (
@@ -215,8 +218,9 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
     spots_letter = _cl(COL_SPOTS)
     grps_letter = _cl(COL_WKLY_GRPS)
 
-    r = grid_first_row
+    r = header_row + 1
     for row_data in rows:
+        station = row_data["station"]
         fill = CATEGORY_FILL.get(row_data["category"])
         for col, value in (
             (COL_CATEGORY, row_data["category"]),
@@ -290,20 +294,54 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
             cell.fill = fill
         cell.border = THIN_BORDER
 
+        is_last_row_for_station = r == station_data_range[station][1]
         r += 1
 
+        if is_last_row_for_station:
+            sub_row = station_subtotal_row[station]
+            data_first, data_last = station_data_range[station]
+            ws.cell(row=sub_row, column=COL_CATEGORY, value=f"{station} TOTAL")
+            ws.cell(row=sub_row, column=COL_STATION, value=station)
+            ws.cell(
+                row=sub_row, column=COL_SPOTS,
+                value=f"=SUM({spots_letter}{data_first}:{spots_letter}{data_last})",
+            )
+            ws.cell(
+                row=sub_row, column=COL_CPP,
+                value=f"=IFERROR({_cl(COL_WKLY_COST)}{sub_row}/{grps_letter}{sub_row},0)",
+            )
+            ws.cell(
+                row=sub_row, column=COL_WKLY_COST,
+                value=f"=SUM({_cl(COL_WKLY_COST)}{data_first}:{_cl(COL_WKLY_COST)}{data_last})",
+            )
+            ws.cell(
+                row=sub_row, column=COL_WKLY_GRPS,
+                value=f"=SUM({grps_letter}{data_first}:{grps_letter}{data_last})",
+            )
+            ws.cell(
+                row=sub_row, column=COL_PCT_MKT,
+                value=f"=IFERROR({grps_letter}{sub_row}/{grps_letter}${total_row}*100,0)",
+            )
+            for col in range(1, NCOLS + 1):
+                cell = ws.cell(row=sub_row, column=col)
+                cell.font = Font(bold=True)
+                cell.fill = SUBTOTAL_FILL
+                cell.border = SUBTOTAL_BORDER
+            r = sub_row + 2  # skip the subtotal row and its blank separator
+
+    subtotal_refs = lambda col: ",".join(f"{col}{station_subtotal_row[s]}" for s in stations)
     ws.cell(row=total_row, column=COL_CATEGORY, value="MARKET TOTAL").font = Font(bold=True)
     ws.cell(
         row=total_row, column=COL_SPOTS,
-        value=f"=SUM({spots_letter}{grid_first_row}:{spots_letter}{grid_last_row})",
+        value=f"=SUM({subtotal_refs(spots_letter)})",
     ).font = Font(bold=True)
     ws.cell(
         row=total_row, column=COL_WKLY_COST,
-        value=f"=SUM({_cl(COL_WKLY_COST)}{grid_first_row}:{_cl(COL_WKLY_COST)}{grid_last_row})",
+        value=f"=SUM({subtotal_refs(_cl(COL_WKLY_COST))})",
     ).font = Font(bold=True)
     ws.cell(
         row=total_row, column=COL_WKLY_GRPS,
-        value=f"=SUM({grps_letter}{grid_first_row}:{grps_letter}{grid_last_row})",
+        value=f"=SUM({subtotal_refs(grps_letter)})",
     ).font = Font(bold=True)
     ws.cell(
         row=total_row, column=COL_CPP,
