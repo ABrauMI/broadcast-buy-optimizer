@@ -1,14 +1,21 @@
 """Exports a sample buy as a Strata-importable order (the "ADX" XML format
-Strata itself exports as .sbx). Reverse-engineered from a real buy export
-rather than public documentation, so some fields Strata didn't need for
-that import (market/station numeric codes, agency contact details) are
-left blank for the buyer to fill in after import.
+Strata itself exports as .sbx). Reverse-engineered from real buy exports
+rather than public documentation. Market and station numeric codes (Nielsen
+market IDs, Spotcable station codes) come from a small lookup table below,
+since Strata assigns those centrally and a rate card has no way to carry
+them -- anything not in that table is left blank for the buyer to fill in
+after import, along with agency contact details we simply don't track.
 
 Key discovery: setting <buyType>daily</buyType> makes each <week> entry
 represent one calendar day (not a calendar week) and each line's
 <spot><quantity> the exact spot count for that date -- which maps directly
 onto our own day-by-day model with no ambiguity about which specific days
 get the spots.
+
+The other hard-won discovery: <daypartCode> must be one of Strata's own
+enumerated daypart labels ("Early Morning", "Early News", ...), not our
+internal 2-letter Excel-sheet shorthand -- an unrecognized value is what
+produced a JScript "Object required" error on import.
 """
 
 import datetime
@@ -42,6 +49,71 @@ STRATA_DAYPART_NAME = {
 
 def _strata_daypart(daypart_name):
     return STRATA_DAYPART_NAME.get(daypart_code(daypart_name), "Unassigned")
+
+
+# Nielsen "Spotcable" station codes and Strata market codes/DMA populations
+# for the stations and markets GPS Impact has actually bought through
+# Strata, pulled from a real combined Strata export
+# (broadcast_all_markets___Scheduler_tv.sbx) rather than anything derivable
+# from a rate card -- Strata assigns these centrally, so a station's own
+# avail file has no way to carry them. Extend both tables as new stations
+# or markets come up; anything missing is left blank rather than guessed,
+# since a wrong numeric code would point Strata at the wrong station/market
+# outright.
+STATION_INFO = {
+    "WISN": {"spotcable_code": "5295", "network_name": "WISN-TV"},
+    "WTMJ": {"spotcable_code": "5108", "network_name": "WTMJ-TV"},
+    "WITI": {"spotcable_code": "5369", "network_name": "WITI-TV"},
+    "WDJT": {"spotcable_code": "6378", "network_name": "WDJT-TV"},
+    "WISC": {"spotcable_code": "5378", "network_name": "WISC-TV"},
+    "WMTV": {"spotcable_code": "5741", "network_name": "WMTV-TV"},
+    "WMSN": {"spotcable_code": "6294", "network_name": "WMSN-TV"},
+    "WKOW": {"spotcable_code": "5736", "network_name": "WKOW-TV"},
+}
+
+MARKET_INFO = {
+    "milwaukee": {
+        "strata_name": "Milwaukee-Racine",
+        "nsi_id": "217",
+        "ncc_market_id": "193",
+        # DMA population by (demo group, age-from), as Strata itself reports it.
+        "population": {
+            ("ADULTS", 18): 1795080,
+            ("ADULTS", 25): 1583822,
+            ("ADULTS", 35): 1298545,
+            ("ADULTS", 50): 863935,
+            ("ADULTS", 55): 729670,
+            ("ADULTS", 65): 439028,
+            ("WOMEN", 35): 672671,
+            ("HOUSEHOLDS", 0): 957240,
+        },
+    },
+    "madison": {
+        "strata_name": "Madison",
+        "nsi_id": "269",
+        "ncc_market_id": "180",
+        "population": {
+            ("ADULTS", 18): 826698,
+            ("ADULTS", 25): 715936,
+            ("ADULTS", 35): 578483,
+            ("ADULTS", 50): 377973,
+            ("ADULTS", 55): 318051,
+            ("ADULTS", 65): 193633,
+            ("WOMEN", 35): 293969,
+            ("HOUSEHOLDS", 0): 441730,
+        },
+    },
+}
+
+
+def _match_market(market_name):
+    """Case-insensitive substring match against the known market table --
+    lets 'Milwaukee, WI' or 'Milwaukee' both resolve to the same entry."""
+    lowered = market_name.lower()
+    for key, info in MARKET_INFO.items():
+        if key in lowered:
+            return info
+    return None
 
 
 def _sub(parent, tag, text=None, **attrib):
@@ -103,16 +175,41 @@ def write_strata_order(
     pattern across every day of [flight_start, flight_end] (inclusive).
     Only rows with at least one bought spot are included -- the sample
     buy's "shown but never bought" rows (Prime, unpicked Daytime, etc.)
-    have no place in an actual station order."""
+    have no place in an actual station order. Returns a list of warnings
+    for anything (market, station) not in the known Strata code tables,
+    since those fields get left blank rather than guessed at."""
     start = _parse_date(flight_start)
     end = _parse_date(flight_end)
     if end < start:
         raise ValueError("flight_end must be on or after flight_start")
     dates = _daterange(start, end)
     campaign_name = campaign_name or "Sample Buy"
+    warnings = []
+
+    market_info = _match_market(market_name)
+    if market_info is None:
+        warnings.append(
+            f"Market {market_name!r} isn't in the known Strata market table -- "
+            "market/DMA numeric codes left blank in the .sbx; fill them in after import."
+        )
+    strata_market_name = market_info["strata_name"] if market_info else market_name
+    market_nsi_id = market_info["nsi_id"] if market_info else ""
+    market_ncc_id = market_info["ncc_market_id"] if market_info else None
+    population = market_info["population"].get((target_demo_group.upper(), target_demo_age)) if market_info else None
+    if market_info and population is None:
+        warnings.append(
+            f"No DMA population on file for {target_demo_group} {target_demo_age}+ in {strata_market_name} -- "
+            "Impressions left as 0 in the .sbx."
+        )
 
     rows = group_avails_into_rows(result.eligible_avails, result.spots)
     bought_rows = [r for r in rows if sum(r["day_counts"].values()) > 0]
+
+    unmapped_stations = sorted({r["station"] for r in bought_rows if r["station"].upper() not in STATION_INFO})
+    for station in unmapped_stations:
+        warnings.append(
+            f"No known Spotcable station code for {station!r} -- codeDescription left blank in the .sbx."
+        )
 
     root = ET.Element(
         "adx",
@@ -191,7 +288,7 @@ def write_strata_order(
     _sub(demo, "ageTo", 99)
 
     _sub(campaign, "buyType", "daily")
-    _sub(campaign, "populations", "0", demoRank="1")
+    _sub(campaign, "populations", population if population is not None else "0", demoRank="1")
 
     row_spots = {id(r): _row_total_spots(r, dates) for r in bought_rows}
     total_spots = sum(row_spots.values())
@@ -199,7 +296,7 @@ def write_strata_order(
 
     order = _sub(campaign, "order")
     key = _sub(order, "key", codeOwner="NCC", codeDescription="Market")
-    _sub(key, "id")  # left blank -- no Strata numeric market code available from rate cards
+    _sub(key, "id", market_ncc_id)
     key = _sub(order, "key", codeOwner="")
     _sub(key, "id")
     key = _sub(order, "key", codeOwner="Strata", codeDescription="Pops")
@@ -211,8 +308,8 @@ def write_strata_order(
     _sub(order_totals, "cost", f"{total_cost:.2f}")
     _sub(order_totals, "spots", total_spots)
 
-    market_el = _sub(order, "market", nsi_id="")  # left blank -- no Nielsen market code available from rate cards
-    _sub(market_el, "name", market_name)
+    market_el = _sub(order, "market", nsi_id=market_nsi_id)
+    _sub(market_el, "name", strata_market_name)
 
     survey = _sub(order, "survey")
     _sub(survey, "ratingService")
@@ -222,7 +319,7 @@ def write_strata_order(
     _sub(survey, "profile")
     _sub(survey, "comment", codeOwner="Spotcable")
 
-    _sub(order, "populations", "0", demoRank="1")
+    _sub(order, "populations", population if population is not None else "0", demoRank="1")
     _sub(order, "comment")
 
     system_order = _sub(order, "systemOrder")
@@ -235,7 +332,7 @@ def write_strata_order(
     _sub(system, "name")
     _sub(system, "syscode")
     _sub(system_order, "affiliateSplit")
-    _sub(system_order, "populations", "0", demoRank="1")
+    _sub(system_order, "populations", population if population is not None else "0", demoRank="1")
 
     so_totals = _sub(system_order, "totals")
     _sub(so_totals, "cost", f"{total_cost:.2f}")
@@ -262,12 +359,16 @@ def write_strata_order(
         _sub(detail_line, "program", row["program"])
         _sub(detail_line, "comment")
 
+        station_info = STATION_INFO.get(row["station"].upper())
+        network_name = station_info["network_name"] if station_info else row["station"]
+        spotcable_code = station_info["spotcable_code"] if station_info else None
+
         network = _sub(detail_line, "network")
-        _sub(network, "name", row["station"])
+        _sub(network, "name", network_name)
         net_id = _sub(network, "ID")
-        _sub(net_id, "code", row["station"], codeOwner="Spotcable")
+        _sub(net_id, "code", row["station"], codeOwner="Spotcable", codeDescription=spotcable_code)
         net_id = _sub(network, "ID")
-        _sub(net_id, "code", row["station"], codeOwner="Strata", codeDescription="Station")
+        _sub(net_id, "code", network_name, codeOwner="Strata", codeDescription="Station")
         net_id = _sub(network, "ID")
         _sub(net_id, "code", "TV", codeOwner="Strata", codeDescription="Band")
         net_id = _sub(network, "ID")
@@ -279,6 +380,8 @@ def write_strata_order(
 
         demo_value = _sub(detail_line, "demoValue", demoRank="1")
         _sub(demo_value, "value", row["rating"], type="Ratings")
+        impressions = round(row["rating"] * population / 100) if population is not None else 0
+        _sub(demo_value, "value", impressions, type="Impressions")
 
         line_spots = row_spots[id(row)]
         line_totals = _sub(detail_line, "totals")
@@ -293,3 +396,5 @@ def write_strata_order(
     tree = ET.ElementTree(root)
     ET.indent(tree, space="\t")
     tree.write(output_path, encoding="UTF-8", xml_declaration=True)
+
+    return warnings

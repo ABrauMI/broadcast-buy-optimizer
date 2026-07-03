@@ -62,7 +62,7 @@ def run_pipeline(
     strata_path = None
     if market_name and flight_start and flight_end:
         strata_path = strata_output_path or os.path.splitext(output_path)[0] + ".sbx"
-        write_strata_order(
+        strata_warnings = write_strata_order(
             result,
             strata_path,
             market_name=market_name,
@@ -72,5 +72,7 @@ def run_pipeline(
             target_demo_age=target_demo_age,
             campaign_name=campaign_name,
         )
+        for w in strata_warnings:
+            log_lines.append(f"STRATA WARNING: {w}")
 
     return result, log_lines, strata_path

@@ -304,6 +304,9 @@ def handle_build_button(ack, body, client):
         summary += f"\n:warning: {w}"
     if strata_path:
         summary += "\nIncludes a Strata-importable order (.sbx) for this flight."
+        for line in log_lines:
+            if line.startswith("STRATA WARNING: "):
+                summary += f"\n:warning: {line[len('STRATA WARNING: '):]}"
 
     files = [{"file": output_path, "filename": "sample_buy.xlsx"}]
     if strata_path:
