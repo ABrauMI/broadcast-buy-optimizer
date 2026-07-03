@@ -36,6 +36,7 @@ SUBTOTAL_FILL = PatternFill(start_color="D9D9D9", end_color="D9D9D9", fill_type=
 SUBTOTAL_BORDER = Border(top=Side(style="medium", color="808080"), bottom=Side(style="thin", color="808080"))
 DAY_COLS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 DAY_HEADER_LABELS = ["M", "T", "W", "Th", "F", "Sa", "Su"]
+INT_FORMAT = "0"  # GRPs and CPP display with no decimals; underlying formula keeps full precision
 
 # Fixed column layout for the flowchart grid.
 COL_CATEGORY = 1
@@ -140,8 +141,8 @@ def _write_station_summary_table(ws, result, start_row, stations, station_subtot
         ws.cell(row=r, column=1, value=station)
         ws.cell(row=r, column=2, value=f"={spots_col}{sub_row}")
         ws.cell(row=r, column=3, value=f"={cost_col}{sub_row}")
-        ws.cell(row=r, column=4, value=f"={grps_col}{sub_row}")
-        ws.cell(row=r, column=5, value=f"=IFERROR(C{r}/D{r},0)")
+        ws.cell(row=r, column=4, value=f"={grps_col}{sub_row}").number_format = INT_FORMAT
+        ws.cell(row=r, column=5, value=f"=IFERROR(C{r}/D{r},0)").number_format = INT_FORMAT
         ws.cell(
             row=r, column=6,
             value=f"=IFERROR(D{r}/{grps_col}${grid_total_row}*100,0)",
@@ -153,7 +154,11 @@ def _write_station_summary_table(ws, result, start_row, stations, station_subtot
     for col, src_col in ((2, _cl(COL_SPOTS)), (3, _cl(COL_WKLY_COST)), (4, _cl(COL_WKLY_GRPS))):
         cell = ws.cell(row=market_row, column=col, value=f"={src_col}{grid_total_row}")
         cell.font = Font(bold=True)
-    ws.cell(row=market_row, column=5, value=f"=IFERROR(C{market_row}/D{market_row},0)").font = Font(bold=True)
+        if col == 4:
+            cell.number_format = INT_FORMAT
+    cpp_cell = ws.cell(row=market_row, column=5, value=f"=IFERROR(C{market_row}/D{market_row},0)")
+    cpp_cell.font = Font(bold=True)
+    cpp_cell.number_format = INT_FORMAT
     ws.cell(row=market_row, column=6, value=f"=IFERROR(D{market_row}/{grps_col}${grid_total_row}*100,0)").font = Font(bold=True)
 
     return market_row + 2  # next free row, with a blank row of padding
@@ -168,8 +173,8 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
     blended_cpp = result.total_cost / result.achieved_grps if result.achieved_grps else 0
     subtitle = (
         f"Target demo: {target_demo_label}   |   "
-        f"Weekly GRPs: {result.achieved_grps:.1f} of {result.target_grps:.0f} goal   |   "
-        f"Weekly cost: ${result.total_cost:,.0f}   |   Blended CPP: ${blended_cpp:,.2f}   |   "
+        f"Weekly GRPs: {result.achieved_grps:.0f} of {result.target_grps:.0f} goal   |   "
+        f"Weekly cost: ${result.total_cost:,.0f}   |   Blended CPP: ${blended_cpp:,.0f}   |   "
         f"Edit the day columns below to change the buy -- totals recalculate automatically."
     )
     ws.merge_cells(start_row=2, start_column=1, end_row=2, end_column=NCOLS)
@@ -273,6 +278,7 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
         cell.border = THIN_BORDER
 
         cell = ws.cell(row=r, column=COL_CPP, value=f"=IFERROR({rate_letter}{r}/{rating_letter}{r},0)")
+        cell.number_format = INT_FORMAT
         if fill:
             cell.fill = fill
         cell.border = THIN_BORDER
@@ -283,6 +289,7 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
         cell.border = THIN_BORDER
 
         cell = ws.cell(row=r, column=COL_WKLY_GRPS, value=f"={spots_letter}{r}*{rating_letter}{r}")
+        cell.number_format = INT_FORMAT
         if fill:
             cell.fill = fill
         cell.border = THIN_BORDER
@@ -310,7 +317,7 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
             ws.cell(
                 row=sub_row, column=COL_CPP,
                 value=f"=IFERROR({_cl(COL_WKLY_COST)}{sub_row}/{grps_letter}{sub_row},0)",
-            )
+            ).number_format = INT_FORMAT
             ws.cell(
                 row=sub_row, column=COL_WKLY_COST,
                 value=f"=SUM({_cl(COL_WKLY_COST)}{data_first}:{_cl(COL_WKLY_COST)}{data_last})",
@@ -318,7 +325,7 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
             ws.cell(
                 row=sub_row, column=COL_WKLY_GRPS,
                 value=f"=SUM({grps_letter}{data_first}:{grps_letter}{data_last})",
-            )
+            ).number_format = INT_FORMAT
             ws.cell(
                 row=sub_row, column=COL_PCT_MKT,
                 value=f"=IFERROR({grps_letter}{sub_row}/{grps_letter}${total_row}*100,0)",
@@ -340,14 +347,18 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
         row=total_row, column=COL_WKLY_COST,
         value=f"=SUM({subtotal_refs(_cl(COL_WKLY_COST))})",
     ).font = Font(bold=True)
-    ws.cell(
+    total_grps_cell = ws.cell(
         row=total_row, column=COL_WKLY_GRPS,
         value=f"=SUM({subtotal_refs(grps_letter)})",
-    ).font = Font(bold=True)
-    ws.cell(
+    )
+    total_grps_cell.font = Font(bold=True)
+    total_grps_cell.number_format = INT_FORMAT
+    total_cpp_cell = ws.cell(
         row=total_row, column=COL_CPP,
         value=f"=IFERROR({_cl(COL_WKLY_COST)}{total_row}/{grps_letter}{total_row},0)",
-    ).font = Font(bold=True)
+    )
+    total_cpp_cell.font = Font(bold=True)
+    total_cpp_cell.number_format = INT_FORMAT
     ws.cell(
         row=total_row, column=COL_PCT_MKT,
         value=f"=IFERROR({grps_letter}{total_row}/{grps_letter}{total_row}*100,0)",
@@ -382,10 +393,10 @@ def write_workbook(result, path, target_demo_label="Adults 35+"):
     ws["A1"].font = TITLE_FONT
     ws["A2"] = f"Target demo: {target_demo_label}"
     ws["A3"] = f"Target weekly GRPs: {result.target_grps:.0f}"
-    ws["A4"] = f"Achieved weekly GRPs: {result.achieved_grps:.1f}"
+    ws["A4"] = f"Achieved weekly GRPs: {result.achieved_grps:.0f}"
     ws["A5"] = f"Total weekly cost: ${result.total_cost:,.0f}"
     blended_cpp = result.total_cost / result.achieved_grps if result.achieved_grps else 0
-    ws["A6"] = f"Blended market CPP: ${blended_cpp:,.2f}"
+    ws["A6"] = f"Blended market CPP: ${blended_cpp:,.0f}"
     ws["A7"] = f"Total spots/week: {len(result.spots)}"
 
     row = 9
@@ -433,9 +444,9 @@ def write_workbook(result, path, target_demo_label="Adults 35+"):
         cpp = b["cost"] / b["grps"] if b["grps"] else 0
         ws.cell(row=row, column=1, value=cat)
         ws.cell(row=row, column=2, value=b["spots"])
-        ws.cell(row=row, column=3, value=round(b["grps"], 1))
+        ws.cell(row=row, column=3, value=round(b["grps"]))
         ws.cell(row=row, column=4, value=round(b["cost"], 0))
-        ws.cell(row=row, column=5, value=round(cpp, 2))
+        ws.cell(row=row, column=5, value=round(cpp))
         row += 1
     row += 1
 
@@ -458,9 +469,9 @@ def write_workbook(result, path, target_demo_label="Adults 35+"):
         cpp = b["cost"] / b["grps"] if b["grps"] else 0
         ws.cell(row=row, column=1, value=station)
         ws.cell(row=row, column=2, value=b["spots"])
-        ws.cell(row=row, column=3, value=round(b["grps"], 1))
+        ws.cell(row=row, column=3, value=round(b["grps"]))
         ws.cell(row=row, column=4, value=round(b["cost"], 0))
-        ws.cell(row=row, column=5, value=round(cpp, 2))
+        ws.cell(row=row, column=5, value=round(cpp))
         row += 1
 
     _autofit(ws, [42, 12, 14, 14, 10])
