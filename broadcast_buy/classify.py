@@ -64,7 +64,7 @@ def daypart_code(daypart_name):
 def classify(avail):
     """Returns one of: 'Early News', 'Noon News', 'Evening News', 'Late News',
     'Prime News', 'Liked Access', 'Daytime', 'Prime' (shown but never bought),
-    or None (excluded from the buy and from the flowchart entirely)."""
+    or None (excluded from the buy and from the sample buy sheet entirely)."""
     dp = avail.daypart_name.strip().upper()
     name = avail.program_name.strip().upper()
 
@@ -80,7 +80,7 @@ def classify(avail):
 
     if dp in PRIME_DAYPARTS:
         # Everything else in primetime is excluded from the buy, but still
-        # shown in the flowchart (for visibility) under its own category --
+        # shown in the sample buy sheet (for visibility) under its own category --
         # the builder never schedules it, so it always carries zeros.
         return "Prime"
 

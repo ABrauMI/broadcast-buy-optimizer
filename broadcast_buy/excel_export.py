@@ -61,7 +61,7 @@ DAY_HEADER_LABELS = ["M", "T", "W", "Th", "F", "Sa", "Su"]
 INT_FORMAT = "0"  # GRPs and CPP display with no decimals; underlying formula keeps full precision
 PCT_FORMAT = "0.0%"  # % Mkt GRPs -- stored as a fraction, Excel's own percent format renders the %
 
-# Fixed column layout for the flowchart grid.
+# Fixed column layout for the sample buy grid.
 COL_CATEGORY = 1
 COL_STATION = 2
 COL_PROGRAM = 3
@@ -144,7 +144,7 @@ def _autofit(ws, widths):
 
 
 def _group_avails_into_rows(eligible_avails, spots):
-    """One flowchart row per unique (category, station, program, time, rate,
+    """One sample buy row per unique (category, station, program, time, rate,
     rating), covering every eligible avail -- not just the ones actually
     bought. The rate/rating are part of the identity because some rate
     cards quote the same program/time slot at different prices across the
@@ -232,7 +232,7 @@ def _write_station_summary_table(ws, result, start_row, stations, station_subtot
     return market_row + 2  # next free row, with a blank row of padding
 
 
-def _write_flowchart_sheet(ws, result, target_demo_label):
+def _write_sample_buy_sheet(ws, result, target_demo_label):
     ws.sheet_view.showGridLines = False
 
     blended_cpp = result.total_cost / result.achieved_grps if result.achieved_grps else 0
@@ -242,7 +242,7 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
         f"Weekly cost: ${result.total_cost:,.0f}   |   Blended CPP: ${blended_cpp:,.0f}   |   "
         f"Edit the day columns below to change the buy -- totals recalculate automatically."
     )
-    banner_next_row = _add_brand_header(ws, NCOLS, "Sample Weekly Buy Flowchart", subtitle)
+    banner_next_row = _add_brand_header(ws, NCOLS, "Sample Weekly Buy", subtitle)
 
     rows = _group_avails_into_rows(result.eligible_avails, result.spots)
     stations = sorted({rd["station"] for rd in rows})
@@ -447,10 +447,10 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
 def write_workbook(result, path, target_demo_label="Adults 35+"):
     wb = Workbook()
 
-    # ---- Buy Flowchart: the single-page, at-a-glance, editable view ----
+    # ---- Sample Buy: the single-page, at-a-glance, editable view ----
     ws = wb.active
-    ws.title = "Buy Flowchart"
-    _write_flowchart_sheet(ws, result, target_demo_label)
+    ws.title = "Sample Buy"
+    _write_sample_buy_sheet(ws, result, target_demo_label)
 
     # ---- Market Summary ----
     ws = wb.create_sheet("Market Summary")
