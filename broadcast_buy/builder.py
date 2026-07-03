@@ -2,7 +2,14 @@
 priority rules: news first (price-insensitive, but the craziest CPP outliers
 get deprioritized), then Wheel/Jeopardy, then the most efficient/best-rated
 remaining daytime, all while respecting a 30-minute minimum spacing between
-spots on the same station on the same day.
+any two spots on the same station on the same day.
+
+Long-format programs can carry more than one spot per airing -- e.g. a
+2-hour block can fit spots every 30 minutes (4 total), an hour-long one can
+fit 2 -- but only when the avail is cost-efficient (at/below the tier's
+median CPP for news, or anywhere in the cost-sorted daytime tier). Cost
+exceptions bought regardless of price (Prime News, Liked Access) stay
+capped at one spot per airing.
 """
 
 import statistics
@@ -15,6 +22,7 @@ MIN_SPOT_GAP_MIN = 30
 OUTLIER_CPP_MULTIPLIER = 3.0
 DEFAULT_EARLIEST_MIN = 7 * 60  # 7:00 AM
 DEFAULT_LATEST_MIN = 23 * 60  # 11:00 PM
+NEWS_CORE_CATEGORIES = {"Early News", "Noon News", "Evening News", "Late News"}
 
 
 @dataclass
@@ -27,12 +35,19 @@ class BuyResult:
     outlier_avails: list = field(default_factory=list)
 
 
-def _fits(schedule, day, start, end, min_gap=MIN_SPOT_GAP_MIN):
-    for e_start, e_end in schedule.get(day, []):
-        gap = max(e_start - end, start - e_end)
-        if gap < min_gap:
-            return False
-    return True
+def _fits(scheduled_starts, day, start, min_gap=MIN_SPOT_GAP_MIN):
+    """Spacing is judged by spot start times, not avail duration -- this is
+    what lets several spots share one long program (each 30 min apart)
+    while still blocking spots in two different programs from landing
+    closer than the minimum gap."""
+    return all(abs(start - existing) >= min_gap for existing in scheduled_starts.get(day, []))
+
+
+def _max_spots_for_avail(avail, efficient):
+    if not efficient:
+        return 1
+    duration = avail.end_min - avail.start_min
+    return max(1, duration // MIN_SPOT_GAP_MIN)
 
 
 def _cpp(avail):
@@ -79,11 +94,7 @@ def build_sample_buy(
     # applies. "Prime News" (e.g. 60 Minutes) is an explicitly-requested
     # exception to the no-primetime rule, so it's bought at full priority
     # like the rest of news, without being deprioritized for cost.
-    news_core = [
-        a
-        for a in eligible
-        if a._category in {"Early News", "Noon News", "Evening News", "Late News"}
-    ]
+    news_core = [a for a in eligible if a._category in NEWS_CORE_CATEGORIES]
     prime_news = [a for a in eligible if a._category == "Prime News"]
     liked = [a for a in eligible if a._category == "Liked Access"]
     daytime = [a for a in eligible if a._category == "Daytime"]
@@ -125,7 +136,7 @@ def build_sample_buy(
 
     ordered_avails = news_normal_order + news_outlier_order + liked_order + daytime_order
 
-    station_day_schedule = defaultdict(lambda: defaultdict(list))  # station -> day -> [(s,e)]
+    station_day_starts = defaultdict(lambda: defaultdict(list))  # station -> day -> [start_min,...]
     total_grps = 0.0
     total_cost = 0.0
     spots = []
@@ -133,28 +144,43 @@ def build_sample_buy(
     for avail in ordered_avails:
         if total_grps >= target_grps:
             break
+
+        if avail._category in NEWS_CORE_CATEGORIES:
+            cpp_val = _cpp(avail)
+            efficient = cpp_val is not None and median_news_cpp > 0 and cpp_val <= median_news_cpp
+        elif avail._category == "Daytime":
+            efficient = True  # already the cost-sorted, cheapest-first tier
+        else:
+            efficient = False  # Prime News / Liked Access: bought regardless of cost
+
+        max_spots = _max_spots_for_avail(avail, efficient)
+
         for day in avail.days:
             if total_grps >= target_grps:
                 break
-            sched = station_day_schedule[avail.station]
-            if not _fits(sched, day, avail.start_min, avail.end_min):
-                continue
-            sched.setdefault(day, []).append((avail.start_min, avail.end_min))
-            spots.append(
-                {
-                    "station": avail.station,
-                    "category": avail._category,
-                    "program_name": avail.program_name,
-                    "day": day,
-                    "start_min": avail.start_min,
-                    "end_min": avail.end_min,
-                    "rate": avail.rate,
-                    "rating": avail.rating,
-                    "cpp": round(avail.rate / avail.rating, 2),
-                }
-            )
-            total_grps += avail.rating
-            total_cost += avail.rate
+            starts = station_day_starts[avail.station][day]
+            placed = 0
+            slot_start = avail.start_min
+            while placed < max_spots and slot_start < avail.end_min and total_grps < target_grps:
+                if _fits(station_day_starts[avail.station], day, slot_start):
+                    starts.append(slot_start)
+                    spots.append(
+                        {
+                            "station": avail.station,
+                            "category": avail._category,
+                            "program_name": avail.program_name,
+                            "day": day,
+                            "start_min": avail.start_min,
+                            "end_min": avail.end_min,
+                            "rate": avail.rate,
+                            "rating": avail.rating,
+                            "cpp": round(avail.rate / avail.rating, 2),
+                        }
+                    )
+                    total_grps += avail.rating
+                    total_cost += avail.rate
+                    placed += 1
+                slot_start += MIN_SPOT_GAP_MIN
 
     result.spots = spots
     result.achieved_grps = total_grps

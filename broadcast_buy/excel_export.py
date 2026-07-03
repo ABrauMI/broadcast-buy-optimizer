@@ -61,19 +61,20 @@ def _category_sort_key(cat):
 
 
 def _group_spots_into_rows(spots):
-    """Collapses per-(avail,day) spots into one flowchart row per unique
-    (station, category, program, time), with a per-weekday flag."""
-    groups = defaultdict(lambda: {"days": set(), "rate": 0, "rating": 0})
+    """Collapses individual spots into one flowchart row per unique
+    (station, category, program, time), tracking how many spots land on
+    each weekday -- long-format programs can carry more than one."""
+    groups = defaultdict(lambda: {"day_counts": defaultdict(int), "rate": 0, "rating": 0})
     for s in spots:
         key = (s["category"], s["station"], s["program_name"], s["start_min"], s["end_min"])
         g = groups[key]
-        g["days"].add(s["day"])
+        g["day_counts"][s["day"]] += 1
         g["rate"] = s["rate"]
         g["rating"] = s["rating"]
 
     rows = []
     for (category, station, program, start_min, end_min), g in groups.items():
-        spots_per_week = len(g["days"])
+        spots_per_week = sum(g["day_counts"].values())
         rows.append(
             {
                 "category": category,
@@ -81,7 +82,7 @@ def _group_spots_into_rows(spots):
                 "program": program,
                 "start_min": start_min,
                 "end_min": end_min,
-                "days": g["days"],
+                "day_counts": g["day_counts"],
                 "rate": g["rate"],
                 "rating": g["rating"],
                 "spots_per_week": spots_per_week,
@@ -191,8 +192,14 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
         for day in DAY_COLS:
             cell = ws.cell(row=r, column=c)
             cell.border = THIN_BORDER
-            if day in row_data["days"]:
-                cell.value = "●"  # ●
+            count = row_data["day_counts"].get(day, 0)
+            if count == 1:
+                cell.value = "●"
+                cell.fill = DAY_MARK_FILL
+                cell.font = Font(color="FFFFFF", bold=True)
+                cell.alignment = Alignment(horizontal="center")
+            elif count > 1:
+                cell.value = count
                 cell.fill = DAY_MARK_FILL
                 cell.font = Font(color="FFFFFF", bold=True)
                 cell.alignment = Alignment(horizontal="center")
