@@ -13,6 +13,8 @@ from .classify import classify
 
 MIN_SPOT_GAP_MIN = 30
 OUTLIER_CPP_MULTIPLIER = 3.0
+DEFAULT_EARLIEST_MIN = 7 * 60  # 7:00 AM
+DEFAULT_LATEST_MIN = 23 * 60  # 11:00 PM
 
 
 @dataclass
@@ -37,6 +39,17 @@ def _cpp(avail):
     return avail.rate / avail.rating if avail.rating else None
 
 
+def _within_time_window(avail, earliest_min, latest_min):
+    """True if the avail's whole time window falls within [earliest_min, latest_min)
+    clock time. Avails that wrap past midnight are treated as violating the
+    window (they necessarily extend into the excluded overnight hours)."""
+    start = avail.start_min % 1440
+    end = avail.end_min % 1440
+    if end <= start:
+        return False
+    return start >= earliest_min and end <= latest_min
+
+
 def _round_robin(groups):
     """groups: dict[key -> list[avail]]. Yields avails interleaved one-per-key per round."""
     queues = {k: list(v) for k, v in groups.items() if v}
@@ -48,10 +61,16 @@ def _round_robin(groups):
                 del queues[k]
 
 
-def build_sample_buy(all_avails, target_grps=750.0):
+def build_sample_buy(
+    all_avails,
+    target_grps=750.0,
+    earliest_min=DEFAULT_EARLIEST_MIN,
+    latest_min=DEFAULT_LATEST_MIN,
+):
     result = BuyResult(target_grps=target_grps)
 
     eligible = [a for a in all_avails if a.rate > 0 and a.rating]
+    eligible = [a for a in eligible if _within_time_window(a, earliest_min, latest_min)]
     for a in eligible:
         a._category = classify(a)
     eligible = [a for a in eligible if a._category]
@@ -145,8 +164,9 @@ def build_sample_buy(all_avails, target_grps=750.0):
         result.warnings.append(
             f"Only reached {total_grps:.1f} of {target_grps:.0f} target weekly GRPs -- "
             "ran out of eligible news/access/daytime inventory under current rules "
-            "(30-min spacing cap and daypart exclusions). Consider loosening spacing, "
-            "adding Early/Late Fringe, or adding more stations."
+            "(30-min spacing cap, 7a-11p daypart window, and daypart exclusions). "
+            "Consider loosening spacing, widening the time window, adding Early/Late "
+            "Fringe, or adding more stations."
         )
 
     return result

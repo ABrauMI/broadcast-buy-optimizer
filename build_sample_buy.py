@@ -13,12 +13,26 @@ from broadcast_buy.excel_export import write_workbook
 from broadcast_buy.parser import parse_rate_card
 
 
+def _parse_clock(text):
+    """Accepts 'HH:MM' or a bare hour like '7' / '23'."""
+    if ":" in text:
+        h, m = text.split(":")
+        return int(h) * 60 + int(m)
+    return int(text) * 60
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("rate_cards", nargs="+", help="Rate card XML file(s) or glob(s)")
     parser.add_argument("--target-grps", type=float, default=750.0)
     parser.add_argument("--target-demo-group", default="Adults")
     parser.add_argument("--target-demo-age", type=int, default=35)
+    parser.add_argument(
+        "--earliest-time", default="7:00", help="No spots before this clock time (default 7:00 AM)"
+    )
+    parser.add_argument(
+        "--latest-time", default="23:00", help="No spots after this clock time (default 11:00 PM)"
+    )
     parser.add_argument("-o", "--output", default="output/sample_buy.xlsx")
     args = parser.parse_args()
 
@@ -39,7 +53,12 @@ def main():
         print(f"Parsed {station}: {len(avails)} avail rows from {path}")
         all_avails.extend(avails)
 
-    result = build_sample_buy(all_avails, target_grps=args.target_grps)
+    result = build_sample_buy(
+        all_avails,
+        target_grps=args.target_grps,
+        earliest_min=_parse_clock(args.earliest_time),
+        latest_min=_parse_clock(args.latest_time),
+    )
 
     demo_label = f"{args.target_demo_group} {args.target_demo_age}+"
     write_workbook(result, args.output, target_demo_label=demo_label)

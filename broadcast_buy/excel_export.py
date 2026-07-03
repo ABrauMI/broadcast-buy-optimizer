@@ -30,8 +30,6 @@ CATEGORY_FILL = {
     "Daytime": PatternFill(start_color="FFF2CC", end_color="FFF2CC", fill_type="solid"),
 }
 DAY_MARK_FILL = PatternFill(start_color="70AD47", end_color="70AD47", fill_type="solid")
-SUBTOTAL_FILL = PatternFill(start_color="D9D9D9", end_color="D9D9D9", fill_type="solid")
-SUBTOTAL_TOP_BORDER = Border(top=Side(style="medium", color="808080"))
 DAY_COLS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 DAY_HEADER_LABELS = ["M", "T", "W", "Th", "F", "Sa", "Su"]
 
@@ -93,9 +91,51 @@ def _group_spots_into_rows(spots):
             }
         )
     rows.sort(
-        key=lambda r: (r["station"], _category_sort_key(r["category"]), r["start_min"])
+        key=lambda r: (_category_sort_key(r["category"]), r["station"], r["start_min"])
     )
     return rows
+
+
+def _write_station_summary_table(ws, result, start_row, ncols):
+    """Compact 'totals by station, at a glance' block, sitting above the
+    main flowchart grid so it doesn't disturb the timeslot-by-timeslot
+    layout of the grid itself."""
+    by_station = defaultdict(lambda: {"spots": 0, "grps": 0.0, "cost": 0.0})
+    for s in result.spots:
+        b = by_station[s["station"]]
+        b["spots"] += 1
+        b["grps"] += s["rating"]
+        b["cost"] += s["rate"]
+
+    ws.cell(row=start_row, column=1, value="Totals by Station").font = SECTION_FONT
+    header_row = start_row + 1
+    headers = ["Station", "Spots/Wk", "Wkly $", "Wkly GRPs", "CPP", "% Mkt GRPs"]
+    for c, h in enumerate(headers, start=1):
+        ws.cell(row=header_row, column=c, value=h)
+    _style_header(ws, header_row, len(headers))
+
+    r = header_row + 1
+    for station in sorted(by_station):
+        b = by_station[station]
+        cpp = b["cost"] / b["grps"] if b["grps"] else 0
+        pct = (b["grps"] / result.achieved_grps * 100) if result.achieved_grps else 0
+        ws.cell(row=r, column=1, value=station)
+        ws.cell(row=r, column=2, value=b["spots"])
+        ws.cell(row=r, column=3, value=round(b["cost"], 0))
+        ws.cell(row=r, column=4, value=round(b["grps"], 1))
+        ws.cell(row=r, column=5, value=round(cpp, 2))
+        ws.cell(row=r, column=6, value=round(pct, 1))
+        r += 1
+
+    ws.cell(row=r, column=1, value="MARKET").font = Font(bold=True)
+    ws.cell(row=r, column=2, value=len(result.spots)).font = Font(bold=True)
+    ws.cell(row=r, column=3, value=round(result.total_cost, 0)).font = Font(bold=True)
+    ws.cell(row=r, column=4, value=round(result.achieved_grps, 1)).font = Font(bold=True)
+    blended_cpp = result.total_cost / result.achieved_grps if result.achieved_grps else 0
+    ws.cell(row=r, column=5, value=round(blended_cpp, 2)).font = Font(bold=True)
+    ws.cell(row=r, column=6, value=100.0).font = Font(bold=True)
+
+    return r + 2  # next free row, with one blank row of padding
 
 
 def _write_flowchart_sheet(ws, result, target_demo_label):
@@ -116,7 +156,9 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
     ws.merge_cells(start_row=2, start_column=1, end_row=2, end_column=ncols)
     ws.cell(row=2, column=1, value=subtitle).font = Font(italic=True, size=10)
 
-    header_row = 4
+    next_row = _write_station_summary_table(ws, result, start_row=4, ncols=ncols)
+
+    header_row = next_row
     headers = (
         ["Category", "Station", "Program", "Time"]
         + DAY_HEADER_LABELS
@@ -129,34 +171,8 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
     rows = _group_spots_into_rows(result.spots)
     base = 4 + len(DAY_COLS)  # last day column (Su)
 
-    def write_subtotal_row(row_num, label, spots, cost, grps):
-        pct = (grps / result.achieved_grps * 100) if result.achieved_grps else 0
-        values = {
-            1: label,
-            base + 1: spots,
-            base + 2: None,
-            base + 3: None,
-            base + 4: round(cost / grps, 2) if grps else 0,
-            base + 5: round(cost, 0),
-            base + 6: round(grps, 1),
-            base + 7: round(pct, 1),
-        }
-        for col in range(1, ncols + 1):
-            cell = ws.cell(row=row_num, column=col, value=values.get(col))
-            cell.fill = SUBTOTAL_FILL
-            cell.font = Font(bold=True)
-            cell.border = SUBTOTAL_TOP_BORDER
-
     r = header_row + 1
-    current_station = None
-    station_spots = station_cost = station_grps = 0
     for row_data in rows:
-        if current_station is not None and row_data["station"] != current_station:
-            write_subtotal_row(r, f"{current_station} TOTAL", station_spots, station_cost, station_grps)
-            r += 1
-            station_spots = station_cost = station_grps = 0
-        current_station = row_data["station"]
-
         fill = CATEGORY_FILL.get(row_data["category"])
         c = 1
         for value in (row_data["category"], row_data["station"], row_data["program"]):
@@ -199,14 +215,6 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
                 cell.fill = fill
             cell.border = THIN_BORDER
             c += 1
-        r += 1
-
-        station_spots += row_data["spots_per_week"]
-        station_cost += row_data["weekly_cost"]
-        station_grps += row_data["weekly_grps"]
-
-    if current_station is not None:
-        write_subtotal_row(r, f"{current_station} TOTAL", station_spots, station_cost, station_grps)
         r += 1
 
     total_row = r
