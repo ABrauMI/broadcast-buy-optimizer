@@ -5,6 +5,8 @@ from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.utils import get_column_letter
 from openpyxl.worksheet.page import PageMargins
 
+from .classify import daypart_code
+
 HEADER_FILL = PatternFill(start_color="1F4E78", end_color="1F4E78", fill_type="solid")
 HEADER_FONT = Font(color="FFFFFF", bold=True)
 SECTION_FONT = Font(bold=True, size=12)
@@ -111,7 +113,7 @@ def _group_avails_into_rows(eligible_avails, spots):
         rows.append(
             {
                 "category": category,  # internal buy tier -- drives the fill color
-                "daypart": info["daypart_name"],  # as given on the rate card -- what's displayed
+                "daypart": daypart_code(info["daypart_name"]),  # normalized to the 2-letter code
                 "station": station,
                 "program": program,
                 "start_min": start_min,

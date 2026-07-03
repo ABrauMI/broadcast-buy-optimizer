@@ -34,6 +34,32 @@ PRIME_NEWS_KEYWORDS = ("60 MINUTES",)
 NOON_NEWS_START = 10 * 60  # 10:00 AM
 NOON_NEWS_END = 14 * 60  # 2:00 PM
 
+# Some stations spell out daypart names ("EARLY MORNING"), others already use
+# the 2-letter shorthand ("EM"). Displaying a consistent code either way
+# means one lookup covering both spellings for every daypart bucket the
+# tool recognizes -- including Early/Late Fringe, since the Wheel/Jeopardy
+# exception can be filed there depending on the station's clearance.
+DAYPART_CODE = {}
+for _names, _code in (
+    (EARLY_MORNING_DAYPARTS, "EM"),
+    (EARLY_NEWS_DAYPARTS, "EN"),
+    (LATE_NEWS_DAYPARTS, "LN"),
+    (DAYTIME_DAYPARTS, "DY"),
+    (ACCESS_DAYPARTS, "PA"),
+    (PRIME_DAYPARTS, "PR"),
+    ({"EARLY FRINGE", "EF"}, "EF"),
+    ({"LATE FRINGE", "LF"}, "LF"),
+    ({"SPORTS", "SP"}, "SP"),
+):
+    for _name in _names:
+        DAYPART_CODE[_name] = _code
+
+
+def daypart_code(daypart_name):
+    """Normalizes a rate card's own daypart label to the 2-letter code,
+    regardless of whether that station already used the short form."""
+    return DAYPART_CODE.get(daypart_name.strip().upper(), daypart_name)
+
 
 def classify(avail):
     """Returns one of: 'Early News', 'Noon News', 'Evening News', 'Late News',
