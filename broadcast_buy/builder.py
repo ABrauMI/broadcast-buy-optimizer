@@ -28,6 +28,7 @@ NEWS_CORE_CATEGORIES = {"Early News", "Noon News", "Evening News", "Late News"}
 @dataclass
 class BuyResult:
     spots: list = field(default_factory=list)  # list[ScheduledSpot-like dict]
+    eligible_avails: list = field(default_factory=list)  # every avail considered, bought or not
     target_grps: float = 0.0
     achieved_grps: float = 0.0
     total_cost: float = 0.0
@@ -89,6 +90,7 @@ def build_sample_buy(
     for a in eligible:
         a._category = classify(a)
     eligible = [a for a in eligible if a._category]
+    result.eligible_avails = eligible
 
     # "Core" news (Early/Noon/Evening/Late) is where the CPP-outlier check
     # applies. "Prime News" (e.g. 60 Minutes) is an explicitly-requested

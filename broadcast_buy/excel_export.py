@@ -33,6 +33,26 @@ DAY_MARK_FILL = PatternFill(start_color="70AD47", end_color="70AD47", fill_type=
 DAY_COLS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 DAY_HEADER_LABELS = ["M", "T", "W", "Th", "F", "Sa", "Su"]
 
+# Fixed column layout for the flowchart grid.
+COL_CATEGORY = 1
+COL_STATION = 2
+COL_PROGRAM = 3
+COL_TIME = 4
+COL_DAY_FIRST = 5
+COL_DAY_LAST = COL_DAY_FIRST + len(DAY_COLS) - 1  # 11 (Sun)
+COL_SPOTS = COL_DAY_LAST + 1  # 12
+COL_RATE = COL_SPOTS + 1  # 13
+COL_RATING = COL_RATE + 1  # 14
+COL_CPP = COL_RATING + 1  # 15
+COL_WKLY_COST = COL_CPP + 1  # 16
+COL_WKLY_GRPS = COL_WKLY_COST + 1  # 17
+COL_PCT_MKT = COL_WKLY_GRPS + 1  # 18
+NCOLS = COL_PCT_MKT
+
+
+def _cl(col):
+    return get_column_letter(col)
+
 
 def _min_to_clock(m):
     h, mm = divmod(int(m) % (24 * 60), 60)
@@ -60,21 +80,26 @@ def _category_sort_key(cat):
     return CATEGORY_ORDER.index(cat) if cat in CATEGORY_ORDER else 99
 
 
-def _group_spots_into_rows(spots):
-    """Collapses individual spots into one flowchart row per unique
-    (station, category, program, time), tracking how many spots land on
-    each weekday -- long-format programs can carry more than one."""
-    groups = defaultdict(lambda: {"day_counts": defaultdict(int), "rate": 0, "rating": 0})
+def _group_avails_into_rows(eligible_avails, spots):
+    """One flowchart row per unique (category, station, program, time),
+    covering every eligible avail -- not just the ones actually bought.
+    Days the program doesn't air are omitted; days it airs but wasn't
+    bought get an explicit 0 so the buy can be edited in place."""
+    identities = {}
+    for a in eligible_avails:
+        key = (a._category, a.station, a.program_name, a.start_min, a.end_min)
+        info = identities.setdefault(key, {"days": set(), "rate": a.rate, "rating": a.rating})
+        info["days"].update(a.days)
+
+    bought_counts = defaultdict(lambda: defaultdict(int))
     for s in spots:
         key = (s["category"], s["station"], s["program_name"], s["start_min"], s["end_min"])
-        g = groups[key]
-        g["day_counts"][s["day"]] += 1
-        g["rate"] = s["rate"]
-        g["rating"] = s["rating"]
+        bought_counts[key][s["day"]] += 1
 
     rows = []
-    for (category, station, program, start_min, end_min), g in groups.items():
-        spots_per_week = sum(g["day_counts"].values())
+    for (category, station, program, start_min, end_min), info in identities.items():
+        counts = bought_counts.get((category, station, program, start_min, end_min), {})
+        day_counts = {d: counts.get(d, 0) for d in info["days"]}
         rows.append(
             {
                 "category": category,
@@ -82,13 +107,9 @@ def _group_spots_into_rows(spots):
                 "program": program,
                 "start_min": start_min,
                 "end_min": end_min,
-                "day_counts": g["day_counts"],
-                "rate": g["rate"],
-                "rating": g["rating"],
-                "spots_per_week": spots_per_week,
-                "weekly_cost": g["rate"] * spots_per_week,
-                "weekly_grps": g["rating"] * spots_per_week,
-                "cpp": g["rate"] / g["rating"] if g["rating"] else 0,
+                "day_counts": day_counts,
+                "rate": info["rate"],
+                "rating": info["rating"],
             }
         )
     rows.sort(
@@ -97,18 +118,16 @@ def _group_spots_into_rows(spots):
     return rows
 
 
-def _write_station_summary_table(ws, result, start_row, ncols):
-    """Compact 'totals by station, at a glance' block, sitting above the
-    main flowchart grid so it doesn't disturb the timeslot-by-timeslot
-    layout of the grid itself."""
-    by_station = defaultdict(lambda: {"spots": 0, "grps": 0.0, "cost": 0.0})
-    for s in result.spots:
-        b = by_station[s["station"]]
-        b["spots"] += 1
-        b["grps"] += s["rating"]
-        b["cost"] += s["rate"]
+def _write_station_summary_table(ws, result, start_row, stations, grid_first_row, grid_last_row, grid_total_row):
+    """Compact 'totals by station, at a glance' block above the main grid.
+    Every figure is a live formula pulling from the grid below, so it
+    stays correct if the grid's spot counts are edited."""
+    station_col = _cl(COL_STATION)
+    spots_col = _cl(COL_SPOTS)
+    cost_col = _cl(COL_WKLY_COST)
+    grps_col = _cl(COL_WKLY_GRPS)
 
-    ws.cell(row=start_row, column=1, value="Totals by Station").font = SECTION_FONT
+    ws.cell(row=start_row, column=1, value="Totals by Station (live -- recalculates if you edit the grid below)").font = SECTION_FONT
     header_row = start_row + 1
     headers = ["Station", "Spots/Wk", "Wkly $", "Wkly GRPs", "CPP", "% Mkt GRPs"]
     for c, h in enumerate(headers, start=1):
@@ -116,50 +135,72 @@ def _write_station_summary_table(ws, result, start_row, ncols):
     _style_header(ws, header_row, len(headers))
 
     r = header_row + 1
-    for station in sorted(by_station):
-        b = by_station[station]
-        cpp = b["cost"] / b["grps"] if b["grps"] else 0
-        pct = (b["grps"] / result.achieved_grps * 100) if result.achieved_grps else 0
+    for station in stations:
+        rng = lambda col: f"{col}{grid_first_row}:{col}{grid_last_row}"
         ws.cell(row=r, column=1, value=station)
-        ws.cell(row=r, column=2, value=b["spots"])
-        ws.cell(row=r, column=3, value=round(b["cost"], 0))
-        ws.cell(row=r, column=4, value=round(b["grps"], 1))
-        ws.cell(row=r, column=5, value=round(cpp, 2))
-        ws.cell(row=r, column=6, value=round(pct, 1))
+        ws.cell(
+            row=r, column=2,
+            value=f'=SUMIF({rng(station_col)},"{station}",{rng(spots_col)})',
+        )
+        ws.cell(
+            row=r, column=3,
+            value=f'=SUMIF({rng(station_col)},"{station}",{rng(cost_col)})',
+        )
+        ws.cell(
+            row=r, column=4,
+            value=f'=SUMIF({rng(station_col)},"{station}",{rng(grps_col)})',
+        )
+        ws.cell(row=r, column=5, value=f"=IFERROR(C{r}/D{r},0)")
+        ws.cell(
+            row=r, column=6,
+            value=f"=IFERROR(D{r}/{grps_col}${grid_total_row}*100,0)",
+        )
         r += 1
 
-    ws.cell(row=r, column=1, value="MARKET").font = Font(bold=True)
-    ws.cell(row=r, column=2, value=len(result.spots)).font = Font(bold=True)
-    ws.cell(row=r, column=3, value=round(result.total_cost, 0)).font = Font(bold=True)
-    ws.cell(row=r, column=4, value=round(result.achieved_grps, 1)).font = Font(bold=True)
-    blended_cpp = result.total_cost / result.achieved_grps if result.achieved_grps else 0
-    ws.cell(row=r, column=5, value=round(blended_cpp, 2)).font = Font(bold=True)
-    ws.cell(row=r, column=6, value=100.0).font = Font(bold=True)
+    market_row = r
+    ws.cell(row=market_row, column=1, value="MARKET").font = Font(bold=True)
+    for col, src_col in ((2, _cl(COL_SPOTS)), (3, _cl(COL_WKLY_COST)), (4, _cl(COL_WKLY_GRPS))):
+        cell = ws.cell(row=market_row, column=col, value=f"={src_col}{grid_total_row}")
+        cell.font = Font(bold=True)
+    ws.cell(row=market_row, column=5, value=f"=IFERROR(C{market_row}/D{market_row},0)").font = Font(bold=True)
+    ws.cell(row=market_row, column=6, value=f"=IFERROR(D{market_row}/{grps_col}${grid_total_row}*100,0)").font = Font(bold=True)
 
-    return r + 2  # next free row, with one blank row of padding
+    return market_row + 2  # next free row, with a blank row of padding
 
 
 def _write_flowchart_sheet(ws, result, target_demo_label):
     ws.sheet_view.showGridLines = False
 
-    # Category, Station, Program, Time | 7 days | Spots,Rate,Rating,CPP,Wkly$,WklyGRPs,%MktGRPs
-    ncols = 4 + len(DAY_COLS) + 7
-
-    ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=ncols)
+    ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=NCOLS)
     ws.cell(row=1, column=1, value="Sample Weekly Buy Flowchart").font = TITLE_FONT
 
     blended_cpp = result.total_cost / result.achieved_grps if result.achieved_grps else 0
     subtitle = (
         f"Target demo: {target_demo_label}   |   "
         f"Weekly GRPs: {result.achieved_grps:.1f} of {result.target_grps:.0f} goal   |   "
-        f"Weekly cost: ${result.total_cost:,.0f}   |   Blended CPP: ${blended_cpp:,.2f}"
+        f"Weekly cost: ${result.total_cost:,.0f}   |   Blended CPP: ${blended_cpp:,.2f}   |   "
+        f"Edit the day columns below to change the buy -- totals recalculate automatically."
     )
-    ws.merge_cells(start_row=2, start_column=1, end_row=2, end_column=ncols)
+    ws.merge_cells(start_row=2, start_column=1, end_row=2, end_column=NCOLS)
     ws.cell(row=2, column=1, value=subtitle).font = Font(italic=True, size=10)
 
-    next_row = _write_station_summary_table(ws, result, start_row=4, ncols=ncols)
+    rows = _group_avails_into_rows(result.eligible_avails, result.spots)
+    stations = sorted({rd["station"] for rd in rows})
 
-    header_row = next_row
+    # Layout is fully determined up front so the station-summary formulas
+    # (written first, but referencing the grid below) point at the right rows.
+    summary_start = 4
+    summary_header_row = summary_start + 1
+    summary_market_row = summary_header_row + 1 + len(stations)
+    header_row = summary_market_row + 2
+    grid_first_row = header_row + 1
+    grid_last_row = grid_first_row + len(rows) - 1
+    total_row = grid_last_row + 1
+
+    _write_station_summary_table(
+        ws, result, summary_start, stations, grid_first_row, grid_last_row, total_row
+    )
+
     headers = (
         ["Category", "Station", "Program", "Time"]
         + DAY_HEADER_LABELS
@@ -169,64 +210,113 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
         ws.cell(row=header_row, column=c, value=h)
     _style_header(ws, header_row, len(headers))
 
-    rows = _group_spots_into_rows(result.spots)
-    base = 4 + len(DAY_COLS)  # last day column (Su)
+    day_first_letter = _cl(COL_DAY_FIRST)
+    day_last_letter = _cl(COL_DAY_LAST)
+    rate_letter = _cl(COL_RATE)
+    rating_letter = _cl(COL_RATING)
+    spots_letter = _cl(COL_SPOTS)
+    grps_letter = _cl(COL_WKLY_GRPS)
 
-    r = header_row + 1
+    r = grid_first_row
     for row_data in rows:
         fill = CATEGORY_FILL.get(row_data["category"])
-        c = 1
-        for value in (row_data["category"], row_data["station"], row_data["program"]):
-            cell = ws.cell(row=r, column=c, value=value)
+        for col, value in (
+            (COL_CATEGORY, row_data["category"]),
+            (COL_STATION, row_data["station"]),
+            (COL_PROGRAM, row_data["program"]),
+        ):
+            cell = ws.cell(row=r, column=col, value=value)
             if fill:
                 cell.fill = fill
             cell.border = THIN_BORDER
-            c += 1
+
         time_label = f"{_min_to_clock(row_data['start_min'])}-{_min_to_clock(row_data['end_min'])}"
-        cell = ws.cell(row=r, column=c, value=time_label)
+        cell = ws.cell(row=r, column=COL_TIME, value=time_label)
         if fill:
             cell.fill = fill
         cell.border = THIN_BORDER
-        c += 1
 
-        for day in DAY_COLS:
-            cell = ws.cell(row=r, column=c)
+        for i, day in enumerate(DAY_COLS):
+            col = COL_DAY_FIRST + i
+            cell = ws.cell(row=r, column=col)
             cell.border = THIN_BORDER
-            count = row_data["day_counts"].get(day, 0)
-            if count > 0:
+            cell.alignment = Alignment(horizontal="center")
+            if day in row_data["day_counts"]:
+                count = row_data["day_counts"][day]
                 cell.value = count
-                cell.fill = DAY_MARK_FILL
-                cell.font = Font(color="FFFFFF", bold=True)
-                cell.alignment = Alignment(horizontal="center")
+                if count > 0:
+                    cell.fill = DAY_MARK_FILL
+                    cell.font = Font(color="FFFFFF", bold=True)
+                else:
+                    if fill:
+                        cell.fill = fill
+                    cell.font = Font(color="595959")
             elif fill:
                 cell.fill = fill
-            c += 1
 
-        tail_values = [
-            row_data["spots_per_week"],
-            row_data["rate"],
-            row_data["rating"],
-            round(row_data["cpp"], 2),
-            round(row_data["weekly_cost"], 0),
-            round(row_data["weekly_grps"], 1),
-            None,
-        ]
-        for value in tail_values:
-            cell = ws.cell(row=r, column=c, value=value)
-            if fill:
-                cell.fill = fill
-            cell.border = THIN_BORDER
-            c += 1
+        cell = ws.cell(row=r, column=COL_SPOTS, value=f"=SUM({day_first_letter}{r}:{day_last_letter}{r})")
+        if fill:
+            cell.fill = fill
+        cell.border = THIN_BORDER
+
+        cell = ws.cell(row=r, column=COL_RATE, value=row_data["rate"])
+        if fill:
+            cell.fill = fill
+        cell.border = THIN_BORDER
+
+        cell = ws.cell(row=r, column=COL_RATING, value=row_data["rating"])
+        if fill:
+            cell.fill = fill
+        cell.border = THIN_BORDER
+
+        cell = ws.cell(row=r, column=COL_CPP, value=f"=IFERROR({rate_letter}{r}/{rating_letter}{r},0)")
+        if fill:
+            cell.fill = fill
+        cell.border = THIN_BORDER
+
+        cell = ws.cell(row=r, column=COL_WKLY_COST, value=f"={spots_letter}{r}*{rate_letter}{r}")
+        if fill:
+            cell.fill = fill
+        cell.border = THIN_BORDER
+
+        cell = ws.cell(row=r, column=COL_WKLY_GRPS, value=f"={spots_letter}{r}*{rating_letter}{r}")
+        if fill:
+            cell.fill = fill
+        cell.border = THIN_BORDER
+
+        cell = ws.cell(
+            row=r, column=COL_PCT_MKT,
+            value=f"=IFERROR({grps_letter}{r}/{grps_letter}${total_row}*100,0)",
+        )
+        if fill:
+            cell.fill = fill
+        cell.border = THIN_BORDER
+
         r += 1
 
-    total_row = r
-    ws.cell(row=total_row, column=1, value="MARKET TOTAL").font = Font(bold=True)
-    ws.cell(row=total_row, column=base + 1, value=sum(rd["spots_per_week"] for rd in rows)).font = Font(bold=True)
-    ws.cell(row=total_row, column=base + 5, value=round(result.total_cost, 0)).font = Font(bold=True)
-    ws.cell(row=total_row, column=base + 6, value=round(result.achieved_grps, 1)).font = Font(bold=True)
-    ws.cell(row=total_row, column=base + 7, value=100.0).font = Font(bold=True)
+    ws.cell(row=total_row, column=COL_CATEGORY, value="MARKET TOTAL").font = Font(bold=True)
+    ws.cell(
+        row=total_row, column=COL_SPOTS,
+        value=f"=SUM({spots_letter}{grid_first_row}:{spots_letter}{grid_last_row})",
+    ).font = Font(bold=True)
+    ws.cell(
+        row=total_row, column=COL_WKLY_COST,
+        value=f"=SUM({_cl(COL_WKLY_COST)}{grid_first_row}:{_cl(COL_WKLY_COST)}{grid_last_row})",
+    ).font = Font(bold=True)
+    ws.cell(
+        row=total_row, column=COL_WKLY_GRPS,
+        value=f"=SUM({grps_letter}{grid_first_row}:{grps_letter}{grid_last_row})",
+    ).font = Font(bold=True)
+    ws.cell(
+        row=total_row, column=COL_CPP,
+        value=f"=IFERROR({_cl(COL_WKLY_COST)}{total_row}/{grps_letter}{total_row},0)",
+    ).font = Font(bold=True)
+    ws.cell(
+        row=total_row, column=COL_PCT_MKT,
+        value=f"=IFERROR({grps_letter}{total_row}/{grps_letter}{total_row}*100,0)",
+    ).font = Font(bold=True)
 
-    ws.freeze_panes = ws.cell(row=header_row + 1, column=4)
+    ws.freeze_panes = ws.cell(row=header_row + 1, column=COL_DAY_FIRST)
 
     widths = [13, 8, 36, 15] + [4] * len(DAY_COLS) + [9, 8, 8, 8, 11, 11, 11]
     _autofit(ws, widths)
@@ -244,7 +334,7 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
 def write_workbook(result, path, target_demo_label="Adults 35+"):
     wb = Workbook()
 
-    # ---- Buy Flowchart: the single-page, at-a-glance view ----
+    # ---- Buy Flowchart: the single-page, at-a-glance, editable view ----
     ws = wb.active
     ws.title = "Buy Flowchart"
     _write_flowchart_sheet(ws, result, target_demo_label)
