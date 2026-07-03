@@ -99,8 +99,10 @@ def build_strata_order_from_workbook(
     run_pipeline's rate-cards-to-both-outputs path. Returns log_lines for
     the caller to surface, same convention as run_pipeline."""
     log_lines = []
-    rows = read_sample_buy_rows(xlsx_path)
+    rows, read_warnings = read_sample_buy_rows(xlsx_path)
     log_lines.append(f"Read {len(rows)} buy row(s) from {xlsx_path}")
+    for w in read_warnings:
+        log_lines.append(f"STRATA WARNING: {w}")
     warnings = write_strata_order(
         rows,
         output_path,

@@ -14,7 +14,10 @@ entirely just means it's absent here too.
 from openpyxl import load_workbook
 
 DAY_HEADER_TO_NAME = {"M": "Mon", "T": "Tue", "W": "Wed", "Th": "Thu", "F": "Fri", "Sa": "Sat", "Su": "Sun"}
-REQUIRED_HEADERS = ["Daypart", "Station", "Program", "Time", "Length", "Rate", "Rating"]
+# Length is deliberately not required: workbooks built before that column
+# existed shouldn't be dead ends -- they just fall back to a :30 default.
+REQUIRED_HEADERS = ["Daypart", "Station", "Program", "Time", "Rate", "Rating"]
+DEFAULT_SPOT_LENGTH = "00:00:30"
 
 
 def _clock_to_min(label):
@@ -46,11 +49,11 @@ def _find_header_row(ws):
 
 
 def read_sample_buy_rows(path, sheet_name="Sample Buy"):
-    """Returns a list of row dicts (station, program, start_min, end_min,
-    day_counts, rate, rating, spot_length, daypart_name) for every buy line
-    still present in the sheet -- reflecting whatever a buyer edited by
-    hand. Raises ValueError if the file doesn't look like a Sample Buy
-    export."""
+    """Returns (rows, warnings). rows is a list of row dicts (station,
+    program, start_min, end_min, day_counts, rate, rating, spot_length,
+    daypart_name) for every buy line still present in the sheet --
+    reflecting whatever a buyer edited by hand. Raises ValueError if the
+    file doesn't look like a Sample Buy export at all."""
     wb = load_workbook(path, data_only=True)
     if sheet_name not in wb.sheetnames:
         raise ValueError(f"No {sheet_name!r} sheet found -- is this a Sample Buy workbook?")
@@ -61,6 +64,15 @@ def read_sample_buy_rows(path, sheet_name="Sample Buy"):
     if missing:
         raise ValueError(f"Sample Buy sheet is missing expected column(s): {', '.join(missing)}")
     day_cols = {name: col[label] for label, name in DAY_HEADER_TO_NAME.items() if label in col}
+
+    warnings = []
+    has_length_col = "Length" in col
+    if not has_length_col:
+        warnings.append(
+            "This workbook has no Length column (it was built with an older version of the "
+            "tool) -- every row's spot length defaulted to :30. Regenerate the workbook with "
+            "/sample-buy first if any spots are actually :15 or :60."
+        )
 
     rows = []
     for r in range(header_row + 1, ws.max_row + 1):
@@ -81,6 +93,8 @@ def read_sample_buy_rows(path, sheet_name="Sample Buy"):
             value = ws.cell(row=r, column=day_col).value
             day_counts[day_name] = int(value) if value else 0
 
+        spot_length = ws.cell(row=r, column=col["Length"]).value if has_length_col else None
+
         rows.append(
             {
                 "daypart_name": ws.cell(row=r, column=col["Daypart"]).value or "",
@@ -91,7 +105,7 @@ def read_sample_buy_rows(path, sheet_name="Sample Buy"):
                 "day_counts": day_counts,
                 "rate": ws.cell(row=r, column=col["Rate"]).value or 0,
                 "rating": ws.cell(row=r, column=col["Rating"]).value or 0,
-                "spot_length": ws.cell(row=r, column=col["Length"]).value or "00:00:30",
+                "spot_length": spot_length or DEFAULT_SPOT_LENGTH,
             }
         )
-    return rows
+    return rows, warnings
