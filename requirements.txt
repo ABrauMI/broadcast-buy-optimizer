@@ -1,4 +1,5 @@
 openpyxl
+Pillow
 slack_bolt
 slack_sdk
 requests
