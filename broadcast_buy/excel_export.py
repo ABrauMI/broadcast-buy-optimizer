@@ -19,6 +19,7 @@ CATEGORY_ORDER = [
     "Prime News",
     "Liked Access",
     "Daytime",
+    "Prime",
 ]
 CATEGORY_FILL = {
     "Early News": PatternFill(start_color="DCE6F1", end_color="DCE6F1", fill_type="solid"),
@@ -28,6 +29,7 @@ CATEGORY_FILL = {
     "Prime News": PatternFill(start_color="E6DCF1", end_color="E6DCF1", fill_type="solid"),
     "Liked Access": PatternFill(start_color="E2EFDA", end_color="E2EFDA", fill_type="solid"),
     "Daytime": PatternFill(start_color="FFF2CC", end_color="FFF2CC", fill_type="solid"),
+    "Prime": PatternFill(start_color="F2F2F2", end_color="F2F2F2", fill_type="solid"),
 }
 DAY_MARK_FILL = PatternFill(start_color="70AD47", end_color="70AD47", fill_type="solid")
 SUBTOTAL_FILL = PatternFill(start_color="D9D9D9", end_color="D9D9D9", fill_type="solid")

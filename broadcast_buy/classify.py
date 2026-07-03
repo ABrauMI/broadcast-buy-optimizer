@@ -31,19 +31,22 @@ NOON_NEWS_END = 14 * 60  # 2:00 PM
 
 def classify(avail):
     """Returns one of: 'Early News', 'Noon News', 'Evening News', 'Late News',
-    'Prime News', 'Liked Access', 'Daytime', or None (excluded from the buy)."""
+    'Prime News', 'Liked Access', 'Daytime', 'Prime' (shown but never bought),
+    or None (excluded from the buy and from the flowchart entirely)."""
     dp = avail.daypart_name.strip().upper()
     name = avail.program_name.strip().upper()
 
     if dp == "PRIME":
-        # Primetime is excluded by default, except the specific programs
-        # called out as exceptions: Wheel/Jeopardy, and prime news
-        # programming like 60 Minutes.
+        # Primetime is excluded from the buy by default, except the specific
+        # programs called out as exceptions: Wheel/Jeopardy, and prime news
+        # programming like 60 Minutes. The rest of Prime still shows up in
+        # the flowchart (for visibility) under its own category, which the
+        # builder never buys into -- it'll always carry zeros.
         if any(kw in name for kw in LIKED_KEYWORDS):
             return "Liked Access"
         if any(kw in name for kw in PRIME_NEWS_KEYWORDS):
             return "Prime News"
-        return None
+        return "Prime"
 
     if dp in EXCLUDED_DAYPARTS:
         return None
