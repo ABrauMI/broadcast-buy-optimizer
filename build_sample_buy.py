@@ -8,17 +8,7 @@ Usage:
 import argparse
 import glob
 
-from broadcast_buy.builder import build_sample_buy
-from broadcast_buy.excel_export import write_workbook
-from broadcast_buy.parser import parse_rate_card
-
-
-def _parse_clock(text):
-    """Accepts 'HH:MM' or a bare hour like '7' / '23'."""
-    if ":" in text:
-        h, m = text.split(":")
-        return int(h) * 60 + int(m)
-    return int(text) * 60
+from broadcast_buy.pipeline import run_pipeline
 
 
 def main():
@@ -41,27 +31,18 @@ def main():
         matches = sorted(glob.glob(pattern))
         paths.extend(matches if matches else [pattern])
 
-    all_avails = []
-    for path in paths:
-        station, avails, warnings = parse_rate_card(
-            path,
-            target_group=args.target_demo_group,
-            target_age_from=args.target_demo_age,
-        )
-        for w in warnings:
-            print(f"WARNING: {w}")
-        print(f"Parsed {station}: {len(avails)} avail rows from {path}")
-        all_avails.extend(avails)
-
-    result = build_sample_buy(
-        all_avails,
+    result, log_lines = run_pipeline(
+        paths,
+        args.output,
         target_grps=args.target_grps,
-        earliest_min=_parse_clock(args.earliest_time),
-        latest_min=_parse_clock(args.latest_time),
+        target_demo_group=args.target_demo_group,
+        target_demo_age=args.target_demo_age,
+        earliest_time=args.earliest_time,
+        latest_time=args.latest_time,
     )
 
-    demo_label = f"{args.target_demo_group} {args.target_demo_age}+"
-    write_workbook(result, args.output, target_demo_label=demo_label)
+    for line in log_lines:
+        print(line)
 
     print()
     print(f"Target weekly GRPs: {args.target_grps:.0f}")
