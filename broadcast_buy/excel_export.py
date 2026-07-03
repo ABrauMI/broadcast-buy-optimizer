@@ -1,16 +1,31 @@
 from collections import defaultdict
+from pathlib import Path
 
 from openpyxl import Workbook
+from openpyxl.drawing.image import Image as XLImage
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.utils import get_column_letter
 from openpyxl.worksheet.page import PageMargins
 
 from .classify import daypart_code
 
-HEADER_FILL = PatternFill(start_color="1F4E78", end_color="1F4E78", fill_type="solid")
-HEADER_FONT = Font(color="FFFFFF", bold=True)
-SECTION_FONT = Font(bold=True, size=12)
-TITLE_FONT = Font(bold=True, size=14)
+# ---- GPS Impact brand kit (Brand Guidelines 2026) ----
+NAVY = "323B51"
+PALE_BLUE = "BED7D5"
+BLUE = "3D6A91"
+RED = "DE5E4E"
+WHITE = "FFFFFF"
+FONT_BODY = "Figtree"
+FONT_DISPLAY = "Superior Title Bold"
+LOGO_PATH = Path(__file__).parent / "assets" / "gps_impact_logo_white.png"
+
+HEADER_FILL = PatternFill(start_color=NAVY, end_color=NAVY, fill_type="solid")
+HEADER_FONT = Font(name=FONT_BODY, color=WHITE, bold=True)
+SECTION_FONT = Font(name=FONT_BODY, bold=True, size=12, color=NAVY)
+TITLE_FONT = Font(name=FONT_DISPLAY, bold=True, size=16, color=WHITE)
+BOLD_FONT = Font(name=FONT_BODY, bold=True)
+DAY_BOUGHT_FONT = Font(name=FONT_BODY, color=WHITE, bold=True)
+DAY_UNBOUGHT_FONT = Font(name=FONT_BODY, color="595959")
 THIN_BORDER = Border(*(Side(style="thin", color="D9D9D9"),) * 4)
 
 CATEGORY_ORDER = [
@@ -23,19 +38,24 @@ CATEGORY_ORDER = [
     "Daytime",
     "Prime",
 ]
+# Category tints are all derived from the brand palette (blended toward
+# white) so the color system reads as GPS Impact's own, not an arbitrary
+# rainbow -- news tiers get the brand's Pale Blue, the liked-show exception
+# leans on the brand Red accent, and excluded/informational rows stay a
+# neutral Navy-tinted gray.
 CATEGORY_FILL = {
-    "Early News": PatternFill(start_color="DCE6F1", end_color="DCE6F1", fill_type="solid"),
-    "Noon News": PatternFill(start_color="DCE6F1", end_color="DCE6F1", fill_type="solid"),
-    "Evening News": PatternFill(start_color="DCE6F1", end_color="DCE6F1", fill_type="solid"),
-    "Late News": PatternFill(start_color="DCE6F1", end_color="DCE6F1", fill_type="solid"),
-    "Prime News": PatternFill(start_color="E6DCF1", end_color="E6DCF1", fill_type="solid"),
-    "Liked Access": PatternFill(start_color="E2EFDA", end_color="E2EFDA", fill_type="solid"),
-    "Daytime": PatternFill(start_color="FFF2CC", end_color="FFF2CC", fill_type="solid"),
-    "Prime": PatternFill(start_color="F2F2F2", end_color="F2F2F2", fill_type="solid"),
+    "Early News": PatternFill(start_color=PALE_BLUE, end_color=PALE_BLUE, fill_type="solid"),
+    "Noon News": PatternFill(start_color=PALE_BLUE, end_color=PALE_BLUE, fill_type="solid"),
+    "Evening News": PatternFill(start_color=PALE_BLUE, end_color=PALE_BLUE, fill_type="solid"),
+    "Late News": PatternFill(start_color=PALE_BLUE, end_color=PALE_BLUE, fill_type="solid"),
+    "Prime News": PatternFill(start_color="BBCAD8", end_color="BBCAD8", fill_type="solid"),
+    "Liked Access": PatternFill(start_color="F6D6D2", end_color="F6D6D2", fill_type="solid"),
+    "Daytime": PatternFill(start_color="DADBDF", end_color="DADBDF", fill_type="solid"),
+    "Prime": PatternFill(start_color="EEEFF1", end_color="EEEFF1", fill_type="solid"),
 }
-DAY_MARK_FILL = PatternFill(start_color="70AD47", end_color="70AD47", fill_type="solid")
-SUBTOTAL_FILL = PatternFill(start_color="D9D9D9", end_color="D9D9D9", fill_type="solid")
-SUBTOTAL_BORDER = Border(top=Side(style="medium", color="808080"), bottom=Side(style="thin", color="808080"))
+DAY_MARK_FILL = PatternFill(start_color=RED, end_color=RED, fill_type="solid")
+SUBTOTAL_FILL = PatternFill(start_color="E0E1E4", end_color="E0E1E4", fill_type="solid")
+SUBTOTAL_BORDER = Border(top=Side(style="medium", color=NAVY), bottom=Side(style="thin", color=NAVY))
 DAY_COLS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 DAY_HEADER_LABELS = ["M", "T", "W", "Th", "F", "Sa", "Su"]
 INT_FORMAT = "0"  # GRPs and CPP display with no decimals; underlying formula keeps full precision
@@ -60,6 +80,45 @@ NCOLS = COL_PCT_MKT
 
 def _cl(col):
     return get_column_letter(col)
+
+
+def _add_brand_header(ws, ncols, title_text, subtitle_text=None):
+    """GPS Impact banner: logo on its own row, title below it, both on a
+    Navy field spanning the sheet's full width, optionally followed by a
+    subtitle line still inside the banner. Returns the first free row
+    after the banner and its blank spacer."""
+    logo_row, title_row = 1, 2
+    banner_rows = [logo_row, title_row]
+
+    if LOGO_PATH.exists():
+        img = XLImage(str(LOGO_PATH))
+        aspect = img.height / img.width
+        img.width = 170
+        img.height = round(170 * aspect)
+        ws.add_image(img, "A1")
+    ws.row_dimensions[logo_row].height = 34
+
+    ws.merge_cells(start_row=title_row, start_column=1, end_row=title_row, end_column=ncols)
+    ws.cell(row=title_row, column=1, value=title_text).font = TITLE_FONT
+    ws.row_dimensions[title_row].height = 24
+
+    next_row = title_row + 1
+    if subtitle_text is not None:
+        subtitle_row = next_row
+        banner_rows.append(subtitle_row)
+        ws.merge_cells(start_row=subtitle_row, start_column=1, end_row=subtitle_row, end_column=ncols)
+        cell = ws.cell(row=subtitle_row, column=1, value=subtitle_text)
+        cell.font = Font(name=FONT_BODY, italic=True, size=10, color=WHITE)
+        ws.row_dimensions[subtitle_row].height = 16
+        next_row += 1
+
+    for row in banner_rows:
+        for col in range(1, ncols + 1):
+            cell = ws.cell(row=row, column=col)
+            if cell.fill.fgColor.rgb in (None, "00000000"):
+                cell.fill = PatternFill(start_color=NAVY, end_color=NAVY, fill_type="solid")
+
+    return next_row + 1  # skip one blank spacer row after the banner
 
 
 def _min_to_clock(m):
@@ -157,17 +216,17 @@ def _write_station_summary_table(ws, result, start_row, stations, station_subtot
         r += 1
 
     market_row = r
-    ws.cell(row=market_row, column=1, value="MARKET").font = Font(bold=True)
+    ws.cell(row=market_row, column=1, value="MARKET").font = BOLD_FONT
     for col, src_col in ((2, _cl(COL_SPOTS)), (3, _cl(COL_WKLY_COST)), (4, _cl(COL_WKLY_GRPS))):
         cell = ws.cell(row=market_row, column=col, value=f"={src_col}{grid_total_row}")
-        cell.font = Font(bold=True)
+        cell.font = BOLD_FONT
         if col == 4:
             cell.number_format = INT_FORMAT
     cpp_cell = ws.cell(row=market_row, column=5, value=f"=IFERROR(C{market_row}/D{market_row},0)")
-    cpp_cell.font = Font(bold=True)
+    cpp_cell.font = BOLD_FONT
     cpp_cell.number_format = INT_FORMAT
     market_pct_cell = ws.cell(row=market_row, column=6, value=f"=IFERROR(D{market_row}/{grps_col}${grid_total_row},0)")
-    market_pct_cell.font = Font(bold=True)
+    market_pct_cell.font = BOLD_FONT
     market_pct_cell.number_format = PCT_FORMAT
 
     return market_row + 2  # next free row, with a blank row of padding
@@ -176,9 +235,6 @@ def _write_station_summary_table(ws, result, start_row, stations, station_subtot
 def _write_flowchart_sheet(ws, result, target_demo_label):
     ws.sheet_view.showGridLines = False
 
-    ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=NCOLS)
-    ws.cell(row=1, column=1, value="Sample Weekly Buy Flowchart").font = TITLE_FONT
-
     blended_cpp = result.total_cost / result.achieved_grps if result.achieved_grps else 0
     subtitle = (
         f"Target demo: {target_demo_label}   |   "
@@ -186,8 +242,7 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
         f"Weekly cost: ${result.total_cost:,.0f}   |   Blended CPP: ${blended_cpp:,.0f}   |   "
         f"Edit the day columns below to change the buy -- totals recalculate automatically."
     )
-    ws.merge_cells(start_row=2, start_column=1, end_row=2, end_column=NCOLS)
-    ws.cell(row=2, column=1, value=subtitle).font = Font(italic=True, size=10)
+    banner_next_row = _add_brand_header(ws, NCOLS, "Sample Weekly Buy Flowchart", subtitle)
 
     rows = _group_avails_into_rows(result.eligible_avails, result.spots)
     stations = sorted({rd["station"] for rd in rows})
@@ -196,7 +251,7 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
     # (written first, but referencing the grid below) point at the right
     # rows. Each station's block of data rows is followed by a subtotal
     # row and a blank separator row before the next station starts.
-    summary_start = 4
+    summary_start = banner_next_row
     summary_header_row = summary_start + 1
     summary_market_row = summary_header_row + 1 + len(stations)
     header_row = summary_market_row + 2
@@ -263,11 +318,11 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
                 cell.value = count
                 if count > 0:
                     cell.fill = DAY_MARK_FILL
-                    cell.font = Font(color="FFFFFF", bold=True)
+                    cell.font = DAY_BOUGHT_FONT
                 else:
                     if fill:
                         cell.fill = fill
-                    cell.font = Font(color="595959")
+                    cell.font = DAY_UNBOUGHT_FONT
             elif fill:
                 cell.fill = fill
 
@@ -342,46 +397,44 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
             ).number_format = PCT_FORMAT
             for col in range(1, NCOLS + 1):
                 cell = ws.cell(row=sub_row, column=col)
-                cell.font = Font(bold=True)
+                cell.font = BOLD_FONT
                 cell.fill = SUBTOTAL_FILL
                 cell.border = SUBTOTAL_BORDER
             r = sub_row + 2  # skip the subtotal row and its blank separator
 
     subtotal_refs = lambda col: ",".join(f"{col}{station_subtotal_row[s]}" for s in stations)
-    ws.cell(row=total_row, column=COL_CATEGORY, value="MARKET TOTAL").font = Font(bold=True)
+    ws.cell(row=total_row, column=COL_CATEGORY, value="MARKET TOTAL").font = BOLD_FONT
     ws.cell(
         row=total_row, column=COL_SPOTS,
         value=f"=SUM({subtotal_refs(spots_letter)})",
-    ).font = Font(bold=True)
+    ).font = BOLD_FONT
     ws.cell(
         row=total_row, column=COL_WKLY_COST,
         value=f"=SUM({subtotal_refs(_cl(COL_WKLY_COST))})",
-    ).font = Font(bold=True)
+    ).font = BOLD_FONT
     total_grps_cell = ws.cell(
         row=total_row, column=COL_WKLY_GRPS,
         value=f"=SUM({subtotal_refs(grps_letter)})",
     )
-    total_grps_cell.font = Font(bold=True)
+    total_grps_cell.font = BOLD_FONT
     total_grps_cell.number_format = INT_FORMAT
     total_cpp_cell = ws.cell(
         row=total_row, column=COL_CPP,
         value=f"=IFERROR({_cl(COL_WKLY_COST)}{total_row}/{grps_letter}{total_row},0)",
     )
-    total_cpp_cell.font = Font(bold=True)
+    total_cpp_cell.font = BOLD_FONT
     total_cpp_cell.number_format = INT_FORMAT
     total_pct_cell = ws.cell(
         row=total_row, column=COL_PCT_MKT,
         value=f"=IFERROR({grps_letter}{total_row}/{grps_letter}{total_row},0)",
     )
-    total_pct_cell.font = Font(bold=True)
+    total_pct_cell.font = BOLD_FONT
     total_pct_cell.number_format = PCT_FORMAT
 
     ws.freeze_panes = ws.cell(row=header_row + 1, column=COL_DAY_FIRST)
 
     widths = [13, 8, 36, 15] + [4] * len(DAY_COLS) + [9, 8, 8, 8, 11, 11, 11]
     _autofit(ws, widths)
-    ws.row_dimensions[1].height = 20
-    ws.row_dimensions[2].height = 14
 
     ws.page_setup.orientation = "landscape"
     ws.page_setup.fitToWidth = 1
@@ -401,17 +454,23 @@ def write_workbook(result, path, target_demo_label="Adults 35+"):
 
     # ---- Market Summary ----
     ws = wb.create_sheet("Market Summary")
-    ws["A1"] = "Sample Weekly Buy -- Market Summary"
-    ws["A1"].font = TITLE_FONT
-    ws["A2"] = f"Target demo: {target_demo_label}"
-    ws["A3"] = f"Target weekly GRPs: {result.target_grps:.0f}"
-    ws["A4"] = f"Achieved weekly GRPs: {result.achieved_grps:.0f}"
-    ws["A5"] = f"Total weekly cost: ${result.total_cost:,.0f}"
-    blended_cpp = result.total_cost / result.achieved_grps if result.achieved_grps else 0
-    ws["A6"] = f"Blended market CPP: ${blended_cpp:,.0f}"
-    ws["A7"] = f"Total spots/week: {len(result.spots)}"
+    SUMMARY_NCOLS = 5
+    banner_next_row = _add_brand_header(ws, SUMMARY_NCOLS, "Sample Weekly Buy -- Market Summary")
 
-    row = 9
+    row = banner_next_row
+    ws.cell(row=row, column=1, value=f"Target demo: {target_demo_label}")
+    row += 1
+    ws.cell(row=row, column=1, value=f"Target weekly GRPs: {result.target_grps:.0f}")
+    row += 1
+    ws.cell(row=row, column=1, value=f"Achieved weekly GRPs: {result.achieved_grps:.0f}")
+    row += 1
+    ws.cell(row=row, column=1, value=f"Total weekly cost: ${result.total_cost:,.0f}")
+    row += 1
+    blended_cpp = result.total_cost / result.achieved_grps if result.achieved_grps else 0
+    ws.cell(row=row, column=1, value=f"Blended market CPP: ${blended_cpp:,.0f}")
+    row += 1
+    ws.cell(row=row, column=1, value=f"Total spots/week: {len(result.spots)}")
+    row += 2
     if result.warnings:
         ws.cell(row=row, column=1, value="Notes").font = SECTION_FONT
         row += 1
