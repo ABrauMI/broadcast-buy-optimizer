@@ -78,10 +78,6 @@ def _autofit(ws, widths):
         ws.column_dimensions[get_column_letter(i)].width = w
 
 
-def _category_sort_key(cat):
-    return CATEGORY_ORDER.index(cat) if cat in CATEGORY_ORDER else 99
-
-
 def _group_avails_into_rows(eligible_avails, spots):
     """One flowchart row per unique (category, station, program, time),
     covering every eligible avail -- not just the ones actually bought.
@@ -463,68 +459,5 @@ def write_workbook(result, path, target_demo_label="Adults 35+"):
         row += 1
 
     _autofit(ws, [42, 12, 14, 14, 10])
-
-    # ---- Per-station tabs ----
-    stations = sorted({s["station"] for s in result.spots})
-    day_order = {d: i for i, d in enumerate(DAY_COLS)}
-
-    for station in stations:
-        ws = wb.create_sheet(station)
-        headers = ["Category", "Program", "Day", "Time", "Rate", "Rating", "CPP"]
-        for c, h in enumerate(headers, start=1):
-            ws.cell(row=1, column=c, value=h)
-        _style_header(ws, 1, len(headers))
-
-        station_spots = [s for s in result.spots if s["station"] == station]
-        station_spots.sort(
-            key=lambda s: (
-                _category_sort_key(s["category"]),
-                s["program_name"],
-                day_order.get(s["day"], 9),
-            )
-        )
-        r = 2
-        for s in station_spots:
-            ws.cell(row=r, column=1, value=s["category"])
-            ws.cell(row=r, column=2, value=s["program_name"])
-            ws.cell(row=r, column=3, value=s["day"])
-            ws.cell(row=r, column=4, value=_min_to_clock(s["start_min"]))
-            ws.cell(row=r, column=5, value=s["rate"])
-            ws.cell(row=r, column=6, value=s["rating"])
-            ws.cell(row=r, column=7, value=s["cpp"])
-            r += 1
-
-        total_grps = sum(s["rating"] for s in station_spots)
-        total_cost = sum(s["rate"] for s in station_spots)
-        ws.cell(row=r + 1, column=1, value="TOTAL").font = Font(bold=True)
-        ws.cell(row=r + 1, column=3, value=f"{len(station_spots)} spots")
-        ws.cell(row=r + 1, column=5, value=round(total_cost, 0)).font = Font(bold=True)
-        ws.cell(row=r + 1, column=6, value=round(total_grps, 1)).font = Font(bold=True)
-        ws.cell(row=r + 1, column=7, value=round(total_cost / total_grps, 2) if total_grps else 0).font = Font(bold=True)
-
-        _autofit(ws, [14, 38, 8, 10, 10, 10, 10])
-
-    # ---- All Spots flat tab ----
-    ws = wb.create_sheet("All Spots")
-    headers = ["Station", "Category", "Program", "Day", "Time", "Rate", "Rating", "CPP"]
-    for c, h in enumerate(headers, start=1):
-        ws.cell(row=1, column=c, value=h)
-    _style_header(ws, 1, len(headers))
-    all_sorted = sorted(
-        result.spots,
-        key=lambda s: (s["station"], day_order.get(s["day"], 9), s["start_min"]),
-    )
-    r = 2
-    for s in all_sorted:
-        ws.cell(row=r, column=1, value=s["station"])
-        ws.cell(row=r, column=2, value=s["category"])
-        ws.cell(row=r, column=3, value=s["program_name"])
-        ws.cell(row=r, column=4, value=s["day"])
-        ws.cell(row=r, column=5, value=_min_to_clock(s["start_min"]))
-        ws.cell(row=r, column=6, value=s["rate"])
-        ws.cell(row=r, column=7, value=s["rating"])
-        ws.cell(row=r, column=8, value=s["cpp"])
-        r += 1
-    _autofit(ws, [10, 14, 38, 8, 10, 10, 10, 10])
 
     wb.save(path)
