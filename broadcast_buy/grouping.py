@@ -36,7 +36,8 @@ def group_avails_into_rows(eligible_avails, spots):
         rows.append(
             {
                 "category": category,  # internal buy tier -- drives the fill color
-                "daypart": daypart_code(info["daypart_name"]),  # normalized to the 2-letter code
+                "daypart": daypart_code(info["daypart_name"]),  # normalized to the 2-letter code, for the Excel sheet
+                "daypart_name": info["daypart_name"],  # the rate card's own label, for exports that need the full name
                 "station": station,
                 "program": program,
                 "start_min": start_min,

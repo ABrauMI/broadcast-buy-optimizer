@@ -14,10 +14,34 @@ get the spots.
 import datetime
 import xml.etree.ElementTree as ET
 
+from .classify import daypart_code
 from .grouping import group_avails_into_rows
 
 DAY_NAMES = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 STRATA_DAY_TAGS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+# Strata's daypartCode expects one of its own enumerated daypart labels, not
+# our internal 2-letter Excel-sheet code (EM/EN/LN/...) -- feeding it the
+# short code is what produced the "Object required" JScript error on import,
+# since Strata's transform looks the value up in its own daypart table and
+# gets nothing back for a code it's never heard of. Anything we can't map
+# confidently falls back to "Unassigned", which is itself a value real
+# Strata orders use.
+STRATA_DAYPART_NAME = {
+    "EM": "Early Morning",
+    "EN": "Early News",
+    "LN": "Late News",
+    "DY": "Daytime",
+    "PA": "Access",
+    "PR": "Prime",
+    "EF": "Early Fringe",
+    "LF": "Late Fringe",
+    "SP": "Sports",
+}
+
+
+def _strata_daypart(daypart_name):
+    return STRATA_DAYPART_NAME.get(daypart_code(daypart_name), "Unassigned")
 
 
 def _sub(parent, tag, text=None, **attrib):
@@ -187,7 +211,7 @@ def write_strata_order(
     _sub(order_totals, "cost", f"{total_cost:.2f}")
     _sub(order_totals, "spots", total_spots)
 
-    market_el = _sub(order, "market")
+    market_el = _sub(order, "market", nsi_id="")  # left blank -- no Nielsen market code available from rate cards
     _sub(market_el, "name", market_name)
 
     survey = _sub(order, "survey")
@@ -234,8 +258,9 @@ def write_strata_order(
             _sub(day_of_week, tag, "Y" if day_name in bought_days else "N")
 
         _sub(detail_line, "length", _spot_length_to_duration(row["spot_length"]))
-        _sub(detail_line, "daypartCode", row["daypart"])
+        _sub(detail_line, "daypartCode", _strata_daypart(row["daypart_name"]))
         _sub(detail_line, "program", row["program"])
+        _sub(detail_line, "comment")
 
         network = _sub(detail_line, "network")
         _sub(network, "name", row["station"])
