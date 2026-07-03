@@ -7,9 +7,10 @@ import threading
 
 
 class Session:
-    def __init__(self, channel, params):
+    def __init__(self, channel, params, kind="sample_buy"):
         self.channel = channel
         self.params = params
+        self.kind = kind  # "sample_buy" (rate cards -> workbook) or "strata_order" (workbook -> .sbx)
         self.file_paths = []
         self.file_names = []
 
@@ -23,9 +24,9 @@ class SessionStore:
         self._sessions = {}
         self._lock = threading.Lock()
 
-    def create(self, thread_ts, channel, params):
+    def create(self, thread_ts, channel, params, kind="sample_buy"):
         with self._lock:
-            self._sessions[thread_ts] = Session(channel, params)
+            self._sessions[thread_ts] = Session(channel, params, kind=kind)
         return self._sessions[thread_ts]
 
     def get(self, thread_ts):

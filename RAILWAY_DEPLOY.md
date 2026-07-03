@@ -47,9 +47,9 @@ are set. Check the **Deployments** tab -> **View Logs** -- you should see
 Bolt's Socket Mode connection log lines with no errors. If the token is
 wrong or a scope is missing, the logs will show exactly that.
 
-From here, `/sample-buy` in Slack should work the same as running it
-locally, except it now stays up whether or not your laptop is open. Railway
-also restarts the process automatically if it ever crashes.
+From here, `/sample-buy` and `/strata-order` in Slack should work the same
+as running it locally, except it now stays up whether or not your laptop is
+open. Railway also restarts the process automatically if it ever crashes.
 
 ## Updating later
 

@@ -22,7 +22,6 @@ import datetime
 import xml.etree.ElementTree as ET
 
 from .classify import daypart_code
-from .grouping import group_avails_into_rows
 
 DAY_NAMES = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 STRATA_DAY_TAGS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
@@ -160,7 +159,7 @@ def _row_total_spots(row, dates):
 
 
 def write_strata_order(
-    result,
+    rows,
     output_path,
     *,
     market_name,
@@ -173,11 +172,15 @@ def write_strata_order(
 ):
     """Writes a Strata ADX order that repeats the sample buy's weekly
     pattern across every day of [flight_start, flight_end] (inclusive).
-    Only rows with at least one bought spot are included -- the sample
-    buy's "shown but never bought" rows (Prime, unpicked Daytime, etc.)
-    have no place in an actual station order. Returns a list of warnings
-    for anything (market, station) not in the known Strata code tables,
-    since those fields get left blank rather than guessed at."""
+    rows is the same shape group_avails_into_rows() and
+    workbook_import.read_sample_buy_rows() both produce -- callers decide
+    whether that's freshly computed from a BuyResult or read back from a
+    (possibly hand-edited) Sample Buy workbook; this function doesn't care
+    which. Only rows with at least one bought spot are included -- the
+    sample buy's "shown but never bought" rows (Prime, unpicked Daytime,
+    etc.) have no place in an actual station order. Returns a list of
+    warnings for anything (market, station) not in the known Strata code
+    tables, since those fields get left blank rather than guessed at."""
     start = _parse_date(flight_start)
     end = _parse_date(flight_end)
     if end < start:
@@ -202,7 +205,6 @@ def write_strata_order(
             "Impressions left as 0 in the .sbx."
         )
 
-    rows = group_avails_into_rows(result.eligible_avails, result.spots)
     bought_rows = [r for r in rows if sum(r["day_counts"].values()) > 0]
 
     unmapped_stations = sorted({r["station"] for r in bought_rows if r["station"].upper() not in STATION_INFO})
@@ -379,7 +381,7 @@ def write_strata_order(
         _sub(detail_line, "spotCost", f"{row['rate']:.2f}", currency="USD")
 
         demo_value = _sub(detail_line, "demoValue", demoRank="1")
-        _sub(demo_value, "value", row["rating"], type="Ratings")
+        _sub(demo_value, "value", f"{float(row['rating']):.1f}", type="Ratings")
         impressions = round(row["rating"] * population / 100) if population is not None else 0
         _sub(demo_value, "value", impressions, type="Impressions")
 

@@ -63,20 +63,24 @@ DAY_HEADER_LABELS = ["M", "T", "W", "Th", "F", "Sa", "Su"]
 INT_FORMAT = "0"  # GRPs and CPP display with no decimals; underlying formula keeps full precision
 PCT_FORMAT = "0.0%"  # % Mkt GRPs -- stored as a fraction, Excel's own percent format renders the %
 
-# Fixed column layout for the sample buy grid.
+# Fixed column layout for the sample buy grid. Length is carried as its own
+# column (rather than folded into Time) so a Strata export built from a
+# re-uploaded, hand-edited copy of this sheet can recover the spot length
+# without needing the original rate card XML again.
 COL_CATEGORY = 1
 COL_STATION = 2
 COL_PROGRAM = 3
 COL_TIME = 4
-COL_DAY_FIRST = 5
-COL_DAY_LAST = COL_DAY_FIRST + len(DAY_COLS) - 1  # 11 (Sun)
-COL_SPOTS = COL_DAY_LAST + 1  # 12
-COL_RATE = COL_SPOTS + 1  # 13
-COL_RATING = COL_RATE + 1  # 14
-COL_CPP = COL_RATING + 1  # 15
-COL_WKLY_COST = COL_CPP + 1  # 16
-COL_WKLY_GRPS = COL_WKLY_COST + 1  # 17
-COL_PCT_MKT = COL_WKLY_GRPS + 1  # 18
+COL_LENGTH = 5
+COL_DAY_FIRST = 6
+COL_DAY_LAST = COL_DAY_FIRST + len(DAY_COLS) - 1  # 12 (Sun)
+COL_SPOTS = COL_DAY_LAST + 1  # 13
+COL_RATE = COL_SPOTS + 1  # 14
+COL_RATING = COL_RATE + 1  # 15
+COL_CPP = COL_RATING + 1  # 16
+COL_WKLY_COST = COL_CPP + 1  # 17
+COL_WKLY_GRPS = COL_WKLY_COST + 1  # 18
+COL_PCT_MKT = COL_WKLY_GRPS + 1  # 19
 NCOLS = COL_PCT_MKT
 
 
@@ -232,7 +236,7 @@ def _write_sample_buy_sheet(ws, result, target_demo_label):
     )
 
     headers = (
-        ["Daypart", "Station", "Program", "Time"]
+        ["Daypart", "Station", "Program", "Time", "Length"]
         + DAY_HEADER_LABELS
         + ["Spots/Wk", "Rate", "Rating", "CPP", "Wkly $", "Wkly GRPs", "% Mkt GRPs"]
     )
@@ -263,6 +267,12 @@ def _write_sample_buy_sheet(ws, result, target_demo_label):
 
         time_label = f"{_min_to_clock(row_data['start_min'])}-{_min_to_clock(row_data['end_min'])}"
         cell = ws.cell(row=r, column=COL_TIME, value=time_label)
+        if fill:
+            cell.fill = fill
+        cell.border = THIN_BORDER
+
+        cell = ws.cell(row=r, column=COL_LENGTH, value=row_data["spot_length"])
+        cell.number_format = "@"  # force text -- "00:00:30" reads as a real time value otherwise
         if fill:
             cell.fill = fill
         cell.border = THIN_BORDER
@@ -392,7 +402,7 @@ def _write_sample_buy_sheet(ws, result, target_demo_label):
 
     ws.freeze_panes = ws.cell(row=header_row + 1, column=COL_DAY_FIRST)
 
-    widths = [13, 8, 36, 15] + [4] * len(DAY_COLS) + [9, 8, 8, 8, 11, 11, 11]
+    widths = [13, 8, 36, 15, 8] + [4] * len(DAY_COLS) + [9, 8, 8, 8, 11, 11, 11]
     _autofit(ws, widths)
 
     ws.page_setup.orientation = "landscape"
