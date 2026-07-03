@@ -112,9 +112,7 @@ def _group_avails_into_rows(eligible_avails, spots):
                 "rating": info["rating"],
             }
         )
-    rows.sort(
-        key=lambda r: (_category_sort_key(r["category"]), r["station"], r["start_min"])
-    )
+    rows.sort(key=lambda r: (r["station"], r["program"], r["start_min"]))
     return rows
 
 
