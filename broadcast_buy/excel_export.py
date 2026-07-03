@@ -30,6 +30,8 @@ CATEGORY_FILL = {
     "Daytime": PatternFill(start_color="FFF2CC", end_color="FFF2CC", fill_type="solid"),
 }
 DAY_MARK_FILL = PatternFill(start_color="70AD47", end_color="70AD47", fill_type="solid")
+SUBTOTAL_FILL = PatternFill(start_color="D9D9D9", end_color="D9D9D9", fill_type="solid")
+SUBTOTAL_TOP_BORDER = Border(top=Side(style="medium", color="808080"))
 DAY_COLS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 DAY_HEADER_LABELS = ["M", "T", "W", "Th", "F", "Sa", "Su"]
 
@@ -91,7 +93,7 @@ def _group_spots_into_rows(spots):
             }
         )
     rows.sort(
-        key=lambda r: (_category_sort_key(r["category"]), r["station"], r["start_min"])
+        key=lambda r: (r["station"], _category_sort_key(r["category"]), r["start_min"])
     )
     return rows
 
@@ -99,8 +101,8 @@ def _group_spots_into_rows(spots):
 def _write_flowchart_sheet(ws, result, target_demo_label):
     ws.sheet_view.showGridLines = False
 
-    # Category, Station, Program, Time | 7 days | Spots,Rate,Rating,CPP,Wkly$,WklyGRPs
-    ncols = 4 + len(DAY_COLS) + 6
+    # Category, Station, Program, Time | 7 days | Spots,Rate,Rating,CPP,Wkly$,WklyGRPs,%MktGRPs
+    ncols = 4 + len(DAY_COLS) + 7
 
     ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=ncols)
     ws.cell(row=1, column=1, value="Sample Weekly Buy Flowchart").font = TITLE_FONT
@@ -118,16 +120,43 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
     headers = (
         ["Category", "Station", "Program", "Time"]
         + DAY_HEADER_LABELS
-        + ["Spots/Wk", "Rate", "Rating", "CPP", "Wkly $", "Wkly GRPs"]
+        + ["Spots/Wk", "Rate", "Rating", "CPP", "Wkly $", "Wkly GRPs", "% Mkt GRPs"]
     )
     for c, h in enumerate(headers, start=1):
         ws.cell(row=header_row, column=c, value=h)
     _style_header(ws, header_row, len(headers))
 
     rows = _group_spots_into_rows(result.spots)
+    base = 4 + len(DAY_COLS)  # last day column (Su)
+
+    def write_subtotal_row(row_num, label, spots, cost, grps):
+        pct = (grps / result.achieved_grps * 100) if result.achieved_grps else 0
+        values = {
+            1: label,
+            base + 1: spots,
+            base + 2: None,
+            base + 3: None,
+            base + 4: round(cost / grps, 2) if grps else 0,
+            base + 5: round(cost, 0),
+            base + 6: round(grps, 1),
+            base + 7: round(pct, 1),
+        }
+        for col in range(1, ncols + 1):
+            cell = ws.cell(row=row_num, column=col, value=values.get(col))
+            cell.fill = SUBTOTAL_FILL
+            cell.font = Font(bold=True)
+            cell.border = SUBTOTAL_TOP_BORDER
 
     r = header_row + 1
+    current_station = None
+    station_spots = station_cost = station_grps = 0
     for row_data in rows:
+        if current_station is not None and row_data["station"] != current_station:
+            write_subtotal_row(r, f"{current_station} TOTAL", station_spots, station_cost, station_grps)
+            r += 1
+            station_spots = station_cost = station_grps = 0
+        current_station = row_data["station"]
+
         fill = CATEGORY_FILL.get(row_data["category"])
         c = 1
         for value in (row_data["category"], row_data["station"], row_data["program"]):
@@ -162,6 +191,7 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
             round(row_data["cpp"], 2),
             round(row_data["weekly_cost"], 0),
             round(row_data["weekly_grps"], 1),
+            None,
         ]
         for value in tail_values:
             cell = ws.cell(row=r, column=c, value=value)
@@ -171,16 +201,24 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
             c += 1
         r += 1
 
+        station_spots += row_data["spots_per_week"]
+        station_cost += row_data["weekly_cost"]
+        station_grps += row_data["weekly_grps"]
+
+    if current_station is not None:
+        write_subtotal_row(r, f"{current_station} TOTAL", station_spots, station_cost, station_grps)
+        r += 1
+
     total_row = r
-    base = 4 + len(DAY_COLS)  # last day column (Su)
-    ws.cell(row=total_row, column=1, value="TOTAL").font = Font(bold=True)
+    ws.cell(row=total_row, column=1, value="MARKET TOTAL").font = Font(bold=True)
     ws.cell(row=total_row, column=base + 1, value=sum(rd["spots_per_week"] for rd in rows)).font = Font(bold=True)
     ws.cell(row=total_row, column=base + 5, value=round(result.total_cost, 0)).font = Font(bold=True)
     ws.cell(row=total_row, column=base + 6, value=round(result.achieved_grps, 1)).font = Font(bold=True)
+    ws.cell(row=total_row, column=base + 7, value=100.0).font = Font(bold=True)
 
     ws.freeze_panes = ws.cell(row=header_row + 1, column=4)
 
-    widths = [13, 8, 36, 15] + [4] * len(DAY_COLS) + [9, 8, 8, 8, 11, 11]
+    widths = [13, 8, 36, 15] + [4] * len(DAY_COLS) + [9, 8, 8, 8, 11, 11, 11]
     _autofit(ws, widths)
     ws.row_dimensions[1].height = 20
     ws.row_dimensions[2].height = 14
