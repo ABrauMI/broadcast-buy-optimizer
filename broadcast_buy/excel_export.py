@@ -48,7 +48,9 @@ CATEGORY_FILL = {
     "Noon News": PatternFill(start_color=PALE_BLUE, end_color=PALE_BLUE, fill_type="solid"),
     "Evening News": PatternFill(start_color=PALE_BLUE, end_color=PALE_BLUE, fill_type="solid"),
     "Late News": PatternFill(start_color=PALE_BLUE, end_color=PALE_BLUE, fill_type="solid"),
-    "Prime News": PatternFill(start_color="BBCAD8", end_color="BBCAD8", fill_type="solid"),
+    # Prime News (60 Minutes) and Liked Access (Wheel/Jeopardy) are both
+    # "bought regardless of cost" primetime exceptions, so they share one color.
+    "Prime News": PatternFill(start_color="F6D6D2", end_color="F6D6D2", fill_type="solid"),
     "Liked Access": PatternFill(start_color="F6D6D2", end_color="F6D6D2", fill_type="solid"),
     "Daytime": PatternFill(start_color="DADBDF", end_color="DADBDF", fill_type="solid"),
     "Prime": PatternFill(start_color="EEEFF1", end_color="EEEFF1", fill_type="solid"),
