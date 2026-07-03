@@ -193,12 +193,7 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
             cell = ws.cell(row=r, column=c)
             cell.border = THIN_BORDER
             count = row_data["day_counts"].get(day, 0)
-            if count == 1:
-                cell.value = "●"
-                cell.fill = DAY_MARK_FILL
-                cell.font = Font(color="FFFFFF", bold=True)
-                cell.alignment = Alignment(horizontal="center")
-            elif count > 1:
+            if count > 0:
                 cell.value = count
                 cell.fill = DAY_MARK_FILL
                 cell.font = Font(color="FFFFFF", bold=True)
