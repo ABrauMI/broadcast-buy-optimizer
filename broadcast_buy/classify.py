@@ -11,13 +11,19 @@ Anything not matched to one of the above (primetime, sports, early/late
 fringe, overnight, specials, digital/streaming "ROS" inventory) is EXCLUDED.
 """
 
-NEWS_DAYPARTS = {"EARLY MORNING", "EARLY NEWS", "LATE NEWS"}
-DAYTIME_DAYPARTS = {"DAYTIME", "DAY"}
-ACCESS_DAYPARTS = {"ACCESS", "PRIME ACCESS"}
+EARLY_MORNING_DAYPARTS = {"EARLY MORNING", "EM"}
+EARLY_NEWS_DAYPARTS = {"EARLY NEWS", "EN"}
+LATE_NEWS_DAYPARTS = {"LATE NEWS", "LN"}
+DAYTIME_DAYPARTS = {"DAYTIME", "DAY", "DY"}
+ACCESS_DAYPARTS = {"ACCESS", "PRIME ACCESS", "PA"}
+PRIME_DAYPARTS = {"PRIME", "PR"}
 EXCLUDED_DAYPARTS = {
     "SPORTS",
+    "SP",
     "EARLY FRINGE",
+    "EF",
     "LATE FRINGE",
+    "LF",
     "OVERNIGHT",
     "SPECIALS",
     "ROS",
@@ -36,31 +42,33 @@ def classify(avail):
     dp = avail.daypart_name.strip().upper()
     name = avail.program_name.strip().upper()
 
-    if dp == "PRIME":
-        # Primetime is excluded from the buy by default, except the specific
-        # programs called out as exceptions: Wheel/Jeopardy, and prime news
-        # programming like 60 Minutes. The rest of Prime still shows up in
-        # the flowchart (for visibility) under its own category, which the
-        # builder never buys into -- it'll always carry zeros.
-        if any(kw in name for kw in LIKED_KEYWORDS):
-            return "Liked Access"
-        if any(kw in name for kw in PRIME_NEWS_KEYWORDS):
-            return "Prime News"
+    # Wheel/Jeopardy and prime news exceptions are checked before any
+    # daypart-based exclusion, since different stations file the exact same
+    # syndicated show under different dayparts (Access, Prime, or even Early
+    # Fringe depending on the market's clearance) -- the show matters more
+    # than where a given station happens to schedule it.
+    if any(kw in name for kw in LIKED_KEYWORDS):
+        return "Liked Access"
+    if any(kw in name for kw in PRIME_NEWS_KEYWORDS):
+        return "Prime News"
+
+    if dp in PRIME_DAYPARTS:
+        # Everything else in primetime is excluded from the buy, but still
+        # shown in the flowchart (for visibility) under its own category --
+        # the builder never schedules it, so it always carries zeros.
         return "Prime"
 
     if dp in EXCLUDED_DAYPARTS:
         return None
 
-    if dp == "EARLY MORNING":
+    if dp in EARLY_MORNING_DAYPARTS:
         return "Early News"
-    if dp == "EARLY NEWS":
+    if dp in EARLY_NEWS_DAYPARTS:
         return "Evening News"
-    if dp == "LATE NEWS":
+    if dp in LATE_NEWS_DAYPARTS:
         return "Late News"
 
     if dp in ACCESS_DAYPARTS:
-        if any(kw in name for kw in LIKED_KEYWORDS):
-            return "Liked Access"
         return None  # other access-hour programming isn't called out by the guidelines
 
     if dp in DAYTIME_DAYPARTS:
