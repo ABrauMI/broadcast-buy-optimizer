@@ -37,6 +37,7 @@ SUBTOTAL_BORDER = Border(top=Side(style="medium", color="808080"), bottom=Side(s
 DAY_COLS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 DAY_HEADER_LABELS = ["M", "T", "W", "Th", "F", "Sa", "Su"]
 INT_FORMAT = "0"  # GRPs and CPP display with no decimals; underlying formula keeps full precision
+PCT_FORMAT = "0.0%"  # % Mkt GRPs -- stored as a fraction, Excel's own percent format renders the %
 
 # Fixed column layout for the flowchart grid.
 COL_CATEGORY = 1
@@ -145,8 +146,8 @@ def _write_station_summary_table(ws, result, start_row, stations, station_subtot
         ws.cell(row=r, column=5, value=f"=IFERROR(C{r}/D{r},0)").number_format = INT_FORMAT
         ws.cell(
             row=r, column=6,
-            value=f"=IFERROR(D{r}/{grps_col}${grid_total_row}*100,0)",
-        )
+            value=f"=IFERROR(D{r}/{grps_col}${grid_total_row},0)",
+        ).number_format = PCT_FORMAT
         r += 1
 
     market_row = r
@@ -159,7 +160,9 @@ def _write_station_summary_table(ws, result, start_row, stations, station_subtot
     cpp_cell = ws.cell(row=market_row, column=5, value=f"=IFERROR(C{market_row}/D{market_row},0)")
     cpp_cell.font = Font(bold=True)
     cpp_cell.number_format = INT_FORMAT
-    ws.cell(row=market_row, column=6, value=f"=IFERROR(D{market_row}/{grps_col}${grid_total_row}*100,0)").font = Font(bold=True)
+    market_pct_cell = ws.cell(row=market_row, column=6, value=f"=IFERROR(D{market_row}/{grps_col}${grid_total_row},0)")
+    market_pct_cell.font = Font(bold=True)
+    market_pct_cell.number_format = PCT_FORMAT
 
     return market_row + 2  # next free row, with a blank row of padding
 
@@ -296,8 +299,9 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
 
         cell = ws.cell(
             row=r, column=COL_PCT_MKT,
-            value=f"=IFERROR({grps_letter}{r}/{grps_letter}${total_row}*100,0)",
+            value=f"=IFERROR({grps_letter}{r}/{grps_letter}${total_row},0)",
         )
+        cell.number_format = PCT_FORMAT
         if fill:
             cell.fill = fill
         cell.border = THIN_BORDER
@@ -328,8 +332,8 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
             ).number_format = INT_FORMAT
             ws.cell(
                 row=sub_row, column=COL_PCT_MKT,
-                value=f"=IFERROR({grps_letter}{sub_row}/{grps_letter}${total_row}*100,0)",
-            )
+                value=f"=IFERROR({grps_letter}{sub_row}/{grps_letter}${total_row},0)",
+            ).number_format = PCT_FORMAT
             for col in range(1, NCOLS + 1):
                 cell = ws.cell(row=sub_row, column=col)
                 cell.font = Font(bold=True)
@@ -359,10 +363,12 @@ def _write_flowchart_sheet(ws, result, target_demo_label):
     )
     total_cpp_cell.font = Font(bold=True)
     total_cpp_cell.number_format = INT_FORMAT
-    ws.cell(
+    total_pct_cell = ws.cell(
         row=total_row, column=COL_PCT_MKT,
-        value=f"=IFERROR({grps_letter}{total_row}/{grps_letter}{total_row}*100,0)",
-    ).font = Font(bold=True)
+        value=f"=IFERROR({grps_letter}{total_row}/{grps_letter}{total_row},0)",
+    )
+    total_pct_cell.font = Font(bold=True)
+    total_pct_cell.number_format = PCT_FORMAT
 
     ws.freeze_panes = ws.cell(row=header_row + 1, column=COL_DAY_FIRST)
 
