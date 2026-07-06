@@ -13,8 +13,8 @@ will actually connect.
 1. In Railway, **New Project** -> **Deploy from GitHub repo**.
 2. Pick `ABrauMI/broadcast-buy-optimizer`. If Railway doesn't see it yet,
    it'll prompt you to install/authorize the Railway GitHub App for that repo.
-3. Branch: `claude/grp-cpp-calculations-mmyi7x` (this is also the repo's
-   default branch, so Railway should pick it automatically).
+3. Branch: `main` (this is also the repo's default branch, so Railway
+   should pick it automatically).
 
 Railway will detect the `requirements.txt` and build the project with
 Nixpacks automatically -- no Dockerfile needed.
@@ -53,5 +53,5 @@ open. Railway also restarts the process automatically if it ever crashes.
 
 ## Updating later
 
-Any time you push new commits to `claude/grp-cpp-calculations-mmyi7x` (or
-whichever branch the service is tracking), Railway redeploys automatically.
+Any time you push new commits to `main` (or whichever branch the service is
+tracking), Railway redeploys automatically.
