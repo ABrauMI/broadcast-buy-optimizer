@@ -52,13 +52,12 @@ def _strata_daypart(daypart_name):
 
 # Nielsen "Spotcable" station codes and Strata market codes/DMA populations
 # for the stations and markets GPS Impact has actually bought through
-# Strata, pulled from a real combined Strata export
-# (broadcast_all_markets___Scheduler_tv.sbx) rather than anything derivable
-# from a rate card -- Strata assigns these centrally, so a station's own
-# avail file has no way to carry them. Extend both tables as new stations
-# or markets come up; anything missing is left blank rather than guessed,
-# since a wrong numeric code would point Strata at the wrong station/market
-# outright.
+# Strata, pulled from real Strata exports for those buys rather than
+# anything derivable from a rate card -- Strata assigns these centrally, so
+# a station's own avail file has no way to carry them. Extend both tables
+# as new stations or markets come up; anything missing is left blank
+# rather than guessed, since a wrong numeric code would point Strata at
+# the wrong station/market outright.
 STATION_INFO = {
     "WISN": {"spotcable_code": "5295", "network_name": "WISN-TV"},
     "WTMJ": {"spotcable_code": "5108", "network_name": "WTMJ-TV"},
@@ -68,6 +67,18 @@ STATION_INFO = {
     "WMTV": {"spotcable_code": "5741", "network_name": "WMTV-TV"},
     "WMSN": {"spotcable_code": "6294", "network_name": "WMSN-TV"},
     "WKOW": {"spotcable_code": "5736", "network_name": "WKOW-TV"},
+    # Montana's 1st congressional district spans the Butte and Missoula
+    # DMAs. Several of these are duopoly subchannels rather than
+    # standalone stations, which is why Strata's own network name carries
+    # a "+S2" (second subchannel) suffix instead of the usual "-TV".
+    "KECI": {"spotcable_code": "312", "network_name": "KECI+S2"},
+    "KPAX": {"spotcable_code": "532", "network_name": "KPAX+S2"},
+    "KTMF": {"spotcable_code": "2022", "network_name": "KTMF+S2"},
+    "KTVM": {"spotcable_code": "5530", "network_name": "KTVM-TV"},
+    "KWYB": {"spotcable_code": "2402", "network_name": "KWYB+S2"},
+    "KXLF": {"spotcable_code": "186", "network_name": "KXLF+S2"},
+    "NTMF": {"spotcable_code": "1703", "network_name": "NTMF-TV"},
+    "NWYB": {"spotcable_code": "1704", "network_name": "NWYB-TV"},
 }
 
 MARKET_INFO = {
@@ -100,6 +111,24 @@ MARKET_INFO = {
             ("ADULTS", 65): 193633,
             ("WOMEN", 35): 293969,
             ("HOUSEHOLDS", 0): 441730,
+        },
+    },
+    "butte": {
+        "strata_name": "Butte, MT",
+        "nsi_id": "354",
+        "ncc_market_id": "393",
+        "population": {
+            ("ADULTS", 35): 112283,
+            ("ADULTS", 50): 73312,
+        },
+    },
+    "missoula": {
+        "strata_name": "Missoula",
+        "nsi_id": "362",
+        "ncc_market_id": "404",
+        "population": {
+            ("ADULTS", 35): 199170,
+            ("ADULTS", 50): 136799,
         },
     },
 }
