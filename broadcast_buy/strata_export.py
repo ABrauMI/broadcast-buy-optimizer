@@ -79,6 +79,10 @@ STATION_INFO = {
     "KXLF": {"spotcable_code": "186", "network_name": "KXLF+S2"},
     "NTMF": {"spotcable_code": "1703", "network_name": "NTMF-TV"},
     "NWYB": {"spotcable_code": "1704", "network_name": "NWYB-TV"},
+    "WMC": {"spotcable_code": "5088", "network_name": "WMC -TV"},
+    "WATN": {"spotcable_code": "5938", "network_name": "WATN-TV"},
+    "WHBQ": {"spotcable_code": "5190", "network_name": "WHBQ-TV"},
+    "WREG": {"spotcable_code": "5358", "network_name": "WREG-TV"},
 }
 
 MARKET_INFO = {
@@ -129,6 +133,15 @@ MARKET_INFO = {
         "population": {
             ("ADULTS", 35): 199170,
             ("ADULTS", 50): 136799,
+        },
+    },
+    "memphis": {
+        "strata_name": "Memphis",
+        "nsi_id": "240",
+        "ncc_market_id": "186",
+        "population": {
+            ("ADULTS", 35): 376797,
+            ("ADULTS", 50): 235014,
         },
     },
 }
